@@ -7,11 +7,48 @@
   <title>Funcionalidades — SismoAlerta</title>
   <link rel="stylesheet" href="Funcionalidades.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Estilos injetados para manter a navbar com o mesmo padrão visual do Index */
+    .user-logged-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3b6bff;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-logout {
+      background: #ff3b3b;
+      color: #ffffff !important;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease;
+    }
+    .btn-logout:hover {
+      background: #d32f2f;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="header-inner">
       <a href="Index.html" class="logo-wrap">
@@ -33,7 +70,6 @@
 
   <main>
 
-    <!-- HERO -->
     <section class="page-hero">
       <div class="hero-grid"></div>
       <div class="page-hero-inner">
@@ -45,7 +81,6 @@
 
     <div class="features-wrap">
 
-      <!-- SENSORS -->
       <div class="subsection-head">
         <h2>Sensores de <em>alta precisão</em></h2>
         <p>Dois sensores trabalhando em conjunto para cobrir todos os vetores de risco de deslizamento.</p>
@@ -79,7 +114,6 @@
 
       </div>
 
-      <!-- ALERT LEVELS -->
       <div class="alert-section">
         <div class="alert-header">
           <div>
@@ -136,7 +170,6 @@
         </div>
       </div>
 
-      <!-- MISC FEATURES -->
       <div class="subsection-head">
         <h2>Mais <em>recursos</em></h2>
         <p>Infraestrutura completa para operação autônoma em qualquer condição.</p>
@@ -182,7 +215,6 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-top">
@@ -204,8 +236,10 @@
             <a href="https://instagram.com/sismoalerta" class="social-link" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
               <i class="fa-brands fa-linkedin-in"></i>
             </a>
+            <a href="#" class="social-link" aria-label="Twitter">
               <i class="fa-brands fa-x-twitter"></i>
             </a>
           </div>
@@ -245,6 +279,47 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const token = localStorage.getItem("userToken");
+      const nome = localStorage.getItem("nomeCliente") || "Usuário";
+      const navContainer = document.querySelector("header nav");
+      
+      if (token && navContainer) {
+        // Encontra os botões antigos de autenticação
+        const btnEntrar = navContainer.querySelector('a[href="Entrar-Conta.html"]');
+        const btnComprar = navContainer.querySelector('.btn-primary-nav') || navContainer.querySelector('.btn-primary');
+        const divisor = navContainer.querySelector('.nav-divider');
+        
+        // Remove os botões antigos se eles existirem
+        if(btnEntrar) btnEntrar.remove();
+        if(btnComprar) btnComprar.remove();
+        if(divisor) divisor.remove();
+        
+        // Separa as iniciais do nome para renderizar dentro da fotinha
+        const iniciais = nome.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+        
+        // Injeta dinamicamente a caixinha do menu logado
+        navContainer.insertAdjacentHTML("beforeend", `
+          <div class="user-logged-menu">
+            <a href="gerencie-sua-conta.html" class="avatar-circle" title="Ver Perfil">${iniciais}</a>
+            <a href="javascript:void(0)" id="btnEfetuarLogoutFunc" class="btn-logout">
+              <i class="fa-solid fa-sign-out-alt"></i> Sair da Conta
+            </a>
+          </div>
+        `);
+
+        // Escuta o evento de clique do logout vermelho
+        document.getElementById("btnEfetuarLogoutFunc").addEventListener("click", function() {
+          if (confirm("Tem certeza que deseja sair da sua conta?")) {
+            localStorage.clear();
+            window.location.reload(); // Recarrega a página aplicando o estado deslogado
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
