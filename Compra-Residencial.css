@@ -1,588 +1,726 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Finalizar Compra — SismoAlerta</title>
-  <link rel="stylesheet" href="Compra-Residencial.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-  <style>
-    /* Estilos para o menu do usuário logado na barra de navegação */
-    .user-logged-menu {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar-circle {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #3b6bff;
-      color: #ffffff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 14px;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-logout {
-      background: #ff3b3b;
-      color: #ffffff !important;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 14px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.2s ease;
-    }
-
-    .btn-logout:hover {
-      background: #d32f2f;
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <div class="header-inner">
-      <a href="Index.html" class="logo-wrap">
-        <img src="imagens/logo2.png" alt="SismoAlerta" class="logo-img">
-        <span class="logo-text">Sismo<span>Alerta</span></span>
-      </a>
-
-      <nav>
-        <a href="Index.html">Início</a>
-        <a href="Funcionalidades.html">Funcionalidades</a>
-        <a href="Especificacoes.html">Especificações</a>
-        <a href="Preço.html">Preços</a>
-        <div class="nav-divider"></div>
-        <a href="Entrar-Conta.html" class="btn-outline">Entrar</a>
-        <a href="Preço.html" class="btn-primary-nav">Comprar</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="checkout-bar">
-    <div class="checkout-bar-inner">
-      <div class="checkout-steps">
-        <div class="step-item active">
-          <div class="step-num">1</div>
-          Dados e pagamento
-        </div>
-        <div class="step-arrow"></div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          Confirmação
-        </div>
-        <div class="step-arrow"></div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          Aprovação
-        </div>
-      </div>
-      <div class="checkout-secure">
-        <i class="fa-solid fa-lock"></i>
-        Compra 100% segura
-      </div>
-    </div>
-  </div>
-
-  <main>
-    <div class="pagina">
-
-      <div class="formulario-wrap">
-
-        <div class="form-card">
-          <div class="form-card-header">
-            <i class="fa-solid fa-user" aria-hidden="true"></i>
-            <h2>Dados pessoais</h2>
-          </div>
-          <div class="form-card-body">
-            <div class="formulario">
-
-              <div class="campo full">
-                <label>Nome completo <span>*</span></label>
-                <input type="text" id="nome" placeholder="Seu nome completo">
-              </div>
-
-              <div class="campo">
-                <label>CPF <span>*</span></label>
-                <input type="text" id="cpf" placeholder="000.000.000-00">
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="form-card">
-          <div class="form-card-header">
-            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-            <h2>Endereço de entrega</h2>
-          </div>
-          <div class="form-card-body">
-            <div class="formulario">
-
-              <div class="campo">
-                <label>CEP <span>*</span></label>
-                <input type="text" id="cep" onblur="buscarCEP()" placeholder="00000-000">
-              </div>
-
-              <div class="campo">
-                <label>Número <span>*</span></label>
-                <input type="text" id="numero" placeholder="Nº">
-              </div>
-
-              <div class="campo full">
-                <label>Endereço <span>*</span></label>
-                <input type="text" id="endereco" placeholder="Nome da rua">
-              </div>
-
-              <div class="campo">
-                <label>Bairro <span>*</span></label>
-                <input type="text" id="bairro" placeholder="Bairro">
-              </div>
-
-              <div class="campo">
-                <label>Cidade <span>*</span></label>
-                <input type="text" id="cidade" placeholder="Cidade">
-              </div>
-
-              <div class="campo">
-                <label>Estado <span>*</span></label>
-                <input type="text" id="estado" placeholder="UF">
-              </div>
-
-              <div class="campo">
-                <label>Complemento</label>
-                <input type="text" id="complemento" placeholder="Apto, bloco... (opcional)">
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="form-card">
-          <div class="form-card-header">
-            <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
-            <h2>Forma de pagamento</h2>
-          </div>
-          <div class="form-card-body">
-            <div class="formulario">
-
-              <div class="campo full">
-                <label>Método <span>*</span></label>
-                <select onchange="mostrarPagamento(this.value)">
-                  <option value="">Selecione o método</option>
-                  <option value="credito">Cartão de crédito</option>
-                  <option value="debito">Cartão de débito</option>
-                  <option value="pix">Pix</option>
-                  <option value="boleto">Boleto bancário</option>
-                </select>
-              </div>
-
-              <div id="area-pagamento" class="full"></div>
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="resumo">
-
-        <div class="resumo-header">
-          <h2>Resumo do pedido</h2>
-        </div>
-
-        <div class="resumo-body">
-
-          <div class="produto">
-            <div class="produto-img-wrap">
-              <img src="imagens/produto.jpeg" alt="TerraScan">
-            </div>
-
-            <div class="info">
-              <strong>TerraScan <span id="qtd">(x1)</span></strong>
-              <p>Sensor inteligente de solo — detecção de umidade e vibração, alerta em 4 níveis com evacuação automática</p>
-
-              <div class="acoes">
-                <button onclick="remover()" aria-label="Remover unidade">−</button>
-                <span class="qty-display" id="qty-num">1</span>
-                <button onclick="adicionar()" aria-label="Adicionar unidade">+<span class="material-symbols-outlined">shopping_bag</span></button>
-              </div>
-            </div>
-
-            <div class="preco-unidade">R$&nbsp;1.290,00</div>
-          </div>
-
-          <div class="valores">
-            <p>
-              <span>Subtotal</span>
-              <span id="subtotal">R$&nbsp;1.290,00</span>
-            </p>
-
-            <p>
-              <span>Desconto</span>
-              <span id="desconto" class="desconto-valor">− R$&nbsp;0,00</span>
-            </p>
-
-            <p id="mensagem-desconto" class="mensagem-desconto" style="display:none;border:none;padding:0;"></p>
-
-            <p class="total">
-              <span>Total</span>
-              <span id="total">R$&nbsp;1.290,00</span>
-            </p>
-          </div>
-
-          <a href="javascript:void(0)" class="btn-comprar" onclick="confirmarCompra()">
-            <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            Confirmar compra
-          </a>
-
-          <div class="checkout-trust">
-            <i class="fa-solid fa-shield-halved"></i>
-            Pagamento seguro e criptografado
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-
-        <div class="footer-brand">
-          <a href="Index.html" class="logo-wrap">
-            <img src="imagens/logo2.png" alt="SismoAlerta" class="logo-img">
-            <span class="logo-text">Sismo<span>Alerta</span></span>
-          </a>
-          <p>Tecnologia inteligente para prevenção de desastres e proteção de vidas em comunidades de risco.</p>
-          <a href="mailto:contato@sismoalerta.com.br" class="footer-contact">
-            <i class="fa-regular fa-envelope"></i>
-            contato@sismoalerta.com.br
-          </a>
-          <div class="socials">
-            <a href="https://wa.me/5511986926518" class="social-link" aria-label="WhatsApp">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
-            <a href="https://instagram.com/sismoalerta" class="social-link" aria-label="Instagram">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4>Produto</h4>
-          <a href="Funcionalidades.html">Funcionalidades</a>
-          <a href="Especificacoes.html">Especificações técnicas</a>
-          <a href="Preço.html">Planos e preços</a>
-          <a href="Criar-Conta.html">Criar conta</a>
-        </div>
-
-        <div class="footer-col">
-          <h4>Empresa</h4>
-          <a href="sobre.html">Sobre nós</a>
-          <a href="sobre.html">Missão e visão</a>
-          <a href="gerencie-sua-conta.html">Minha conta</a>
-        </div>
-
-        <div class="footer-col">
-          <h4>Suporte</h4>
-          <a href="https://wa.me/5511986926518">Fale conosco</a>
-          <a href="ajuda-termos-privacidade.html">Central de ajuda</a>
-          <a href="ajuda-termos-privacidade.html">Termos e privacidade</a>
-        </div>
-
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    let preco = 1290;
-    let quantidade = 1;
-
-    // Gerenciador de Estado do Menu (Login/Logout)
-    document.addEventListener("DOMContentLoaded", function() {
-      const token = localStorage.getItem("userToken");
-      const nome = localStorage.getItem("nomeCliente") || "Usuário";
-      const navContainer = document.querySelector("header nav");
-      
-      if (token && navContainer) {
-        const btnEntrar = navContainer.querySelector('.btn-outline');
-        const btnComprar = navContainer.querySelector('.btn-primary-nav');
-        const divisor = navContainer.querySelector('.nav-divider');
-        
-        if(btnEntrar) btnEntrar.remove();
-        if(btnComprar) btnComprar.remove();
-        if(divisor) divisor.remove();
-        
-        const loggedUserInitials = nome.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
-        
-        navContainer.insertAdjacentHTML("beforeend", `
-          <div class="user-logged-menu">
-            <a href="gerencie-sua-conta.html" class="avatar-circle" title="Ver Perfil">${loggedUserInitials}</a>
-            <a href="javascript:void(0)" id="btnEfetuarLogoutCheckout" class="btn-logout">
-              <i class="fa-solid fa-sign-out-alt"></i> Sair
-            </a>
-          </div>
-        `);
-
-        document.getElementById("btnEfetuarLogoutCheckout").addEventListener("click", function() {
-          if (confirm("Tem certeza que deseja sair da sua conta?")) {
-            localStorage.clear();
-            window.location.reload();
-          }
-        });
-      }
-    });
-
-    document.getElementById("cep").addEventListener("input", function(e) {
-      let valor = e.target.value.replace(/\D/g, '').substring(0,8);
-      valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
-      e.target.value = valor;
-    });
-
-    function buscarCEP() {
-      let cep = document.getElementById("cep").value.replace(/\D/g, '');
-      if (cep.length !== 8) { alert("CEP inválido!"); return; }
-      fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(res => res.json())
-        .then(dados => {
-          if (dados.erro) return alert("CEP não encontrado!");
-          document.getElementById("endereco").value = dados.logradouro;
-          document.getElementById("bairro").value = dados.bairro;
-          document.getElementById("cidade").value = dados.localidade;
-          document.getElementById("estado").value = dados.uf;
-        })
-        .catch(() => alert("Erro ao buscar CEP!"));
-    }
-
-    function salvarDados() {
-      localStorage.setItem("nomeCliente", document.getElementById("nome").value);
-      localStorage.setItem("cpfCliente", document.getElementById("cpf").value);
-      localStorage.setItem("cepCliente", document.getElementById("cep").value);
-      localStorage.setItem("enderecoCliente", document.getElementById("endereco").value);
-      localStorage.setItem("numeroCliente", document.getElementById("numero").value);
-      localStorage.setItem("bairroCliente", document.getElementById("bairro").value);
-      localStorage.setItem("cidadeCliente", document.getElementById("cidade").value);
-      localStorage.setItem("estadoCliente", document.getElementById("estado").value);
-      localStorage.setItem("quantidade", quantidade);
-      localStorage.setItem("valorTotal", document.getElementById("total").innerText);
-      let parcelas = document.getElementById("parcelas");
-      if(parcelas){ localStorage.setItem("parcelas", parcelas.value); } else { localStorage.removeItem("parcelas"); }
-      let tipo = document.querySelector("select").value;
-      localStorage.setItem("tipoPagamento", tipo);
-      localStorage.setItem("numeroPedido", Math.floor(Math.random()*1000000));
-    }
-
-    function validarCartao(numero) {
-      numero = numero.replace(/\s+/g, '');
-      if (!/^\d+$/.test(numero)) return false;
-      let soma = 0, alt = false;
-      for (let i = numero.length - 1; i >= 0; i--) {
-        let n = parseInt(numero[i]);
-        if (alt) { n *= 2; if (n > 9) n -= 9; }
-        soma += n;
-        alt = !alt;
-      }
-      return soma % 10 === 0;
-    }
-
-    function validarValidade(data) {
-      if (!/^\d{2}\/\d{2}$/.test(data)) return false;
-      let [mes, ano] = data.split('/').map(Number);
-      let hoje = new Date();
-      let anoAtual = hoje.getFullYear() % 100;
-      let mesAtual = hoje.getMonth() + 1;
-      return mes >= 1 && mes <= 12 && !(ano < anoAtual || (ano === anoAtual && mes < mesAtual));
-    }
-
-    function validarCVV(cvv) { return /^\d{3,4}$/.test(cvv); }
-
-    const bandeiras = [
-      { nome:"elo", regex:/^(401178|401179|431274|438935|451416|457631|504175|506699|509048|627780|636297|636368)/, img:"Elo-Bandeira.png", tamanho:16 },
-      { nome:"hipercard", regex:/^(606282)/, img:"Hipercard-Bandeira.jpg", tamanho:16 },
-      { nome:"diners", regex:/^(300|301|302|303|304|305|36|38)/, img:"DinersClub-Bandeira.jpg", tamanho:14 },
-      { nome:"amex", regex:/^3[47]/, img:"AmericanExpress-Bandeira.png", tamanho:15 },
-      { nome:"mastercard", regex:/^5[1-5]/, img:"MasterCard-Bandeira.png", tamanho:16 },
-      { nome:"visa", regex:/^4/, img:"Visa-Bandeira.png", tamanho:16 }
-    ];
-
-    function identificarBandeira(numero) {
-      numero = numero.replace(/\s+/g, '');
-      return bandeiras.find(b => b.regex.test(numero)) || null;
-    }
-
-    document.addEventListener("input", function(e) {
-      if (e.target.id === "numero-cartao") {
-        let num = e.target.value.replace(/\D/g, '');
-        let bandeira = identificarBandeira(num);
-        let limite = bandeira ? bandeira.tamanho : 16;
-        num = num.substring(0, limite);
-        if (bandeira?.nome === "amex") { num = num.replace(/(\d{4})(\d{6})(\d{0,5})/, "$1 $2 $3"); }
-        else { num = num.replace(/(\d{4})(?=\d)/g, "$1 "); }
-        e.target.value = num.trim();
-        let img = document.getElementById("bandeira-img");
-        if (img) {
-          if (bandeira) { img.src = bandeira.img; img.style.display = "inline-block"; }
-          else { img.style.display = "none"; }
-        }
-        if (validarCartao(num)) { e.target.style.border = "2px solid #3baa70"; }
-        else { e.target.style.border = "2px solid #e04040"; }
-      }
-    });
-
-    function simularPagamento(numero){
-      numero = numero.replace(/\s+/g,'');
-      switch(numero){
-        case "4242424242424242": return { status: "aprovado", msg: "Pagamento aprovado!" };
-        case "4000000000000002": return { status: "recusado", msg: "Cartão recusado pelo banco." };
-        case "40000000000000995": return { status: "fundos", msg: "Saldo insuficiente." };
-        case "4000000000000069": return { status: "bloqueado", msg: "Cartão bloqueado." };
-        case "4000000000000119": return { status: "erro", msg: "Erro na transação." };
-        default: return { status: "aprovado", msg: "Pagamento aprovado!" };
-      }
-    }
-
-    function formatar(v){ return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); }
-
-    function calcularDesconto(sub){
-      let tipo = document.querySelector("select").value;
-      let parcelas = document.getElementById("parcelas");
-      if (tipo==="pix"||tipo==="debito") return sub*0.10;
-      if (parcelas && parcelas.value=="1") return sub*0.10;
-      return 0;
-    }
-
-    function adicionar(){ quantidade++; atualizar(); }
-    function remover(){ if(quantidade>0){ quantidade--; atualizar(); } }
-
-    function atualizar(){
-      let sub = preco*quantidade;
-      let desc = calcularDesconto(sub);
-      let total = sub-desc;
-      let parcelas = document.getElementById("parcelas");
-      if(parcelas){
-        let qtd = +parcelas.value;
-        if(qtd>=6&&qtd<=7) total*=1.15;
-        else if(qtd>=8) total*=1.18;
-      }
-      document.getElementById("subtotal").innerText = formatar(sub);
-      document.getElementById("desconto").innerText = "- "+formatar(desc);
-      document.getElementById("total").innerText = formatar(total);
-      document.getElementById("qtd").innerText = "(x"+quantidade+")";
-      let qd = document.getElementById("qty-num");
-      if(qd) qd.innerText = quantidade;
-    }
-
-    function confirmarCompra(){
-      let tipo = document.querySelector("select").value;
-      if(!tipo) return alert("Selecione o pagamento!");
-      if(quantidade===0) return alert("Adicione produto!");
-      if(tipo==="pix"){ salvarDados(); return location.href="pix.html"; }
-      if(tipo==="boleto"){ salvarDados(); return location.href="boleto.html"; }
-      let numero = document.getElementById("numero-cartao").value;
-      let nome = document.getElementById("nome-cartao").value;
-      let validade = document.getElementById("validade").value;
-      let cvv = document.getElementById("cvv").value;
-      let bandeira = identificarBandeira(numero);
-      if(!bandeira) return alert("Cartão inválido!");
-      if(!nome) return alert("Nome obrigatório!");
-      if(!validarValidade(validade)) return alert("Validade inválida!");
-      if(!validarCVV(cvv)) return alert("CVV inválido!");
-      let btn = document.querySelector(".btn-comprar");
-      btn.innerHTML = "⏳ Processando...";
-      btn.style.pointerEvents="none";
-      setTimeout(()=>{
-        let resultado = simularPagamento(numero);
-        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Confirmar compra';
-        btn.style.pointerEvents = "auto";
-        if(resultado.status === "aprovado"){
-          let parcelas = document.getElementById("parcelas");
-          if(parcelas){
-            let qtd = parseInt(parcelas.value);
-            let total = preco * quantidade;
-            let desconto = calcularDesconto(total);
-            total -= desconto;
-            if (qtd >= 6 && qtd <= 7) total *= 1.15;
-            else if (qtd >= 8 && qtd <= 10) total *= 1.18;
-            let valorParcela = total / qtd;
-            localStorage.setItem("parcelas", qtd);
-            localStorage.setItem("valorParcela", valorParcela.toFixed(2));
-          }
-          salvarDados();
-          alert("✅ Pagamento autorizado");
-          location.href = "pagamento-aprovado.html";
-        }
-        else if(resultado.status === "recusado"){ alert("❌ " + resultado.msg); }
-        else if(resultado.status === "fundos"){ alert("💸 " + resultado.msg); }
-        else if(resultado.status === "bloqueado"){ alert("🔒 " + resultado.msg); }
-        else{ alert("⚠️ " + resultado.msg); }
-      }, 2000);
-    }
-
-    function mostrarPagamento(tipo){
-      let area = document.getElementById("area-pagamento");
-      if(tipo === "credito" || tipo === "debito"){
-        let htmlCampos = '';
-        
-        if(tipo === "credito"){
-          htmlCampos += `
-          <div class="campo full">
-            <label>Parcelas</label>
-            <select id="parcelas" onchange="atualizar()">
-              <option value="1">1× sem juros (10% OFF)</option>
-              <option value="2">2× sem juros</option>
-              <option value="3">3× sem juros</option>
-              <option value="4">4× sem juros</option>
-              <option value="5">5× sem juros</option>
-              <option value="6">6× (+15%)</option>
-              <option value="8">8× (+18%)</option>
-            </select>
-          </div>`;
-        }
-
-        htmlCampos += `
-        <div class="campo full">
-          <label>Número do cartão</label>
-          <div class="input-with-badge">
-            <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000">
-            <img id="bandeira-img" alt="bandeira">
-          </div>
-        </div>
-        <div class="campo full">
-          <label>Nome no cartão</label>
-          <input type="text" id="nome-cartao" placeholder="Nome como está no cartão">
-        </div>
-        <div class="campo">
-          <label>Validade</label>
-          <input type="text" id="validade" placeholder="MM/AA">
-        </div>
-        <div class="campo">
-          <label>CVV</label>
-          <input type="text" id="cvv" placeholder="•••">
-        </div>`;
-        
-        area.innerHTML = htmlCampos;
-      } else {
-        area.innerHTML = "";
-      }
-      atualizar();
-    }
-  </script>
-
-</body>
-</html>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+:root {
+  --blue: #3b6bff;
+  --blue-dark: #1a3db5;
+  --blue-light: #eef2ff;
+  --night: #080b14;
+  --night-2: #0e1220;
+  --white: #ffffff;
+  --gray-1: #f7f8fc;
+  --gray-2: #e8ebf4;
+  --gray-3: #c4c9dc;
+  --gray-4: #8890aa;
+  --text: #0f1523;
+  --text-muted: #6b7390;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--gray-1);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: var(--night);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 150px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.logo-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.3px;
+}
+
+.logo-text span { color: var(--blue); }
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+nav a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+nav a:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.07);
+}
+
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.12);
+  margin: 0 6px;
+}
+
+.btn-outline {
+  color: rgba(255,255,255,0.85) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  padding: 8px 16px !important;
+}
+
+.btn-outline:hover {
+  border-color: rgba(255,255,255,0.5) !important;
+  background: rgba(255,255,255,0.07) !important;
+  color: var(--white) !important;
+}
+
+.btn-primary-nav {
+  background: var(--blue) !important;
+  color: var(--white) !important;
+  font-weight: 600 !important;
+  padding: 9px 20px !important;
+  font-size: 14px !important;
+  border-radius: var(--radius-sm) !important;
+  border: none !important;
+  transition: var(--transition) !important;
+}
+
+.btn-primary-nav:hover { background: var(--blue-dark) !important; }
+
+/* ===== PAGE HEADER BAR ===== */
+.checkout-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-2);
+  padding: 0 40px;
+}
+
+.checkout-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkout-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--gray-4);
+  font-weight: 500;
+}
+
+.step-item.active {
+  color: var(--blue);
+}
+
+.step-item.done {
+  color: #3baa70;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-arrow {
+  width: 32px;
+  height: 1px;
+  background: var(--gray-2);
+  margin: 0 12px;
+}
+
+.checkout-secure {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.checkout-secure i { color: #3baa70; font-size: 13px; }
+
+/* ===== MAIN LAYOUT ===== */
+main { flex: 1; }
+
+.pagina {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 32px;
+  padding: 40px 40px 80px;
+  align-items: start;
+}
+
+/* ===== FORM SECTION ===== */
+.formulario-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.form-card-header {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--gray-2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-card-header i {
+  font-size: 16px;
+  color: var(--blue);
+}
+
+.form-card-header h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.form-card-body {
+  padding: 28px;
+}
+
+/* the original grid structure stays — these styles feed into it */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+}
+
+.campo span {
+  color: #e04040;
+}
+
+.campo input,
+.campo select {
+  height: 46px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--gray-2);
+  padding: 0 14px;
+  background: var(--gray-1);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.campo input::placeholder { color: var(--gray-4); }
+
+.campo input:focus,
+.campo select:focus {
+  border-color: var(--blue);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(59,107,255,0.1);
+}
+
+/* Select arrow */
+.campo select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238890aa' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+/* Dynamic payment area */
+#area-pagamento {
+  display: contents;
+}
+
+/* Card number with bandeira image */
+.campo .input-with-badge {
+  position: relative;
+}
+
+.campo .input-with-badge input {
+  width: 100%;
+  padding-right: 56px;
+}
+
+#bandeira-img {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 24px;
+  object-fit: contain;
+  display: none;
+  border-radius: 4px;
+}
+
+/* ===== ORDER SUMMARY ===== */
+.resumo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: sticky;
+  top: calc(72px + 56px + 20px);
+}
+
+.resumo-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--gray-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resumo-header h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.resumo-body { padding: 20px 24px; }
+
+/* Product row */
+.produto {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--gray-2);
+  margin-bottom: 20px;
+}
+
+.produto-img-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background: var(--blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.produto-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.info strong {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.info p {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* Quantity controls */
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--gray-1);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  overflow: hidden;
+}
+
+.acoes button {
+  border: none;
+  background: transparent;
+  width: 36px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.acoes button:hover { background: var(--gray-2); }
+
+.acoes button:first-child { border-right: 1px solid var(--gray-2); }
+.acoes button:last-child  { border-left: 1px solid var(--gray-2); }
+
+/* Hide the shopping bag icon from + button — keep only the + */
+.acoes button .material-symbols-outlined { display: none; }
+
+.qty-display {
+  width: 40px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  font-family: 'Sora', sans-serif;
+}
+
+.preco-unidade {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+/* Totals */
+.valores {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.valores p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--gray-2);
+}
+
+.valores p:last-of-type { border-bottom: none; }
+
+.valores p span:last-child { font-weight: 500; color: var(--text); }
+
+.desconto-valor { color: #3baa70 !important; }
+
+.total {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  padding-top: 12px !important;
+  margin-top: 4px;
+  border-top: 2px solid var(--text) !important;
+  border-bottom: none !important;
+}
+
+.total span { font-weight: 800 !important; }
+
+.mensagem-desconto {
+  font-size: 12px;
+  color: #3baa70;
+  font-weight: 500;
+  padding: 6px 10px;
+  background: #e6f7ef;
+  border-radius: var(--radius-sm);
+  margin: 4px 0;
+}
+
+/* Confirm button */
+.btn-comprar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  background: var(--blue);
+  color: var(--white);
+  text-align: center;
+  padding: 15px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  transition: var(--transition);
+  letter-spacing: 0.1px;
+  cursor: pointer;
+}
+
+.btn-comprar:hover {
+  background: var(--blue-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(59,107,255,0.3);
+}
+
+/* Trust note below button */
+.checkout-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.checkout-trust i { color: #3baa70; }
+
+/* ===== BOLETO BUTTON ===== */
+.btn-boleto {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  background: var(--blue);
+  color: var(--white);
+  padding: 13px 22px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-boleto:hover {
+  background: var(--blue-dark);
+  transform: translateY(-1px);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--night);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 64px 40px 0;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 48px;
+}
+
+.footer-brand .logo-wrap { margin-bottom: 16px; }
+
+.footer-brand p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 280px;
+}
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: var(--transition);
+  margin-bottom: 24px;
+}
+
+.footer-contact:hover { color: var(--white); }
+
+.socials { display: flex; gap: 10px; }
+
+.social-link {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-size: 17px;
+  transition: var(--transition);
+}
+
+.social-link:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.footer-col h4 {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer-col a {
+  display: block;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 5px 0;
+  transition: var(--transition);
+}
+
+.footer-col a:hover {
+  color: var(--white);
+  padding-left: 4px;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.25);
+}
+
+.footer-bottom-links { display: flex; gap: 20px; }
+
+.footer-bottom-links a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.25);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-bottom-links a:hover { color: rgba(255,255,255,0.6); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  .pagina {
+    grid-template-columns: 1fr;
+    padding: 28px 20px 60px;
+  }
+
+  .resumo { position: static; }
+
+  .formulario { grid-template-columns: 1fr; }
+  .full { grid-column: span 1; }
+
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .header-inner { padding: 0 20px; }
+  nav { display: none; }
+  .checkout-bar { padding: 0 20px; }
+}
+
+@media (max-width: 600px) {
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .checkout-steps { display: none; }
+}
