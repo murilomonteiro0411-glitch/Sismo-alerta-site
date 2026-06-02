@@ -8,225 +8,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <title>Entrar — SismoAlerta</title>
   <style>
-    /* ===== MODAL DE RECUPERAÇÃO ===== */
-    .modal-recovery {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(8,11,20,0.65);
-      backdrop-filter: blur(4px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-
-    .modal-recovery.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-content {
-      background: var(--white, #fff);
-      padding: 36px 32px;
-      border-radius: 18px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-      position: relative;
-      transform: scale(0.92) translateY(8px);
-      transition: transform 0.25s ease;
-    }
-
-    .modal-recovery.active .modal-content {
-      transform: scale(1) translateY(0);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px; right: 16px;
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: #8890aa;
-      cursor: pointer;
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .modal-close:hover { background: #f7f8fc; color: #0f1523; }
-
-    .modal-content h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #0f1523;
-      letter-spacing: -0.3px;
-      margin-bottom: 8px;
-    }
-
-    .modal-content > div > p,
-    .modal-content p {
-      font-size: 14px;
-      color: #6b7390;
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-
-    .btn-submit-recovery {
-      width: 100%;
-      height: 48px;
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       background: #3b6bff;
       color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-family: 'Sora', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .btn-submit-recovery:hover { background: #1a3db5; transform: translateY(-1px); }
-
-    .feedback-recovery {
-      display: none;
-      text-align: center;
-      padding: 8px 0 4px;
-    }
-
-    .feedback-recovery i {
-      font-size: 52px;
-      color: #10b981;
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    /* Footer styles needed since Entrar-Conta.css doesn't have them */
-    .footer {
-      background: #080b14;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 64px 40px 0;
-    }
-
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-
-    .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 60px;
-      padding-bottom: 48px;
-    }
-
-    .footer-brand-desc {
+      font-weight: bold;
       font-size: 14px;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.7;
-      margin-bottom: 20px;
-      max-width: 280px;
-    }
-
-    .footer-contact-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: rgba(255,255,255,0.5);
       text-decoration: none;
-      margin-bottom: 20px;
-      transition: color 0.2s;
-    }
-
-    .footer-contact-link:hover { color: #fff; }
-
-    .footer-socials { display: flex; gap: 10px; }
-
-    .footer-social-link {
-      width: 38px; height: 38px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      font-size: 17px;
-      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
-    }
-
-    .footer-social-link:hover {
-      background: #3b6bff;
-      border-color: #3b6bff;
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .footer-col-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .footer-col-link {
-      display: block;
-      color: rgba(255,255,255,0.45);
-      text-decoration: none;
-      font-size: 14px;
-      padding: 5px 0;
-      transition: color 0.2s, padding-left 0.2s;
-    }
-
-    .footer-col-link:hover { color: #fff; padding-left: 4px; }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 20px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.25); }
-
-    .footer-bottom-links { display: flex; gap: 20px; }
-
-    .footer-bottom-links a {
-      font-size: 13px;
-      color: rgba(255,255,255,0.25);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-bottom-links a:hover { color: rgba(255,255,255,0.6); }
-
-    @media (max-width: 900px) {
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-    }
-
-    @media (max-width: 600px) {
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-      .footer { padding: 48px 24px 0; }
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="header-inner">
       <a href="Index.html" class="logo-wrap">
@@ -246,10 +47,8 @@
     </div>
   </header>
 
-  <!-- AUTH -->
   <div class="auth-wrapper">
 
-    <!-- LEFT -->
     <div class="auth-left">
       <div class="auth-left-grid"></div>
       <div class="auth-left-content">
@@ -288,14 +87,13 @@
       </div>
     </div>
 
-    <!-- RIGHT -->
     <div class="auth-right">
       <div class="auth-form-wrap">
 
         <h1>Acessar conta</h1>
         <p class="subtitle">Digite suas credenciais para continuar</p>
 
-        <form action="Index.html">
+        <form id="loginForm">
 
           <div class="form-group">
             <label class="form-label" for="email">E-mail</label>
@@ -332,7 +130,7 @@
               <input type="checkbox" name="lembrar" id="lembrar">
               <label for="lembrar">Lembrar de mim</label>
             </label>
-            <a href="javascript:void(0)" class="forgot-link" onclick="toggleModal(true)">Esqueceu a senha?</a>
+            <a href="javascript:void(0)" class="forgot-link">Esqueceu a senha?</a>
           </div>
 
           <button type="submit" class="btn-login">
@@ -354,137 +152,30 @@
 
   </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-
-        <div>
-          <a href="Index.html" class="logo-wrap" style="margin-bottom:16px;display:inline-flex;">
-            <img src="imagens/logo2.png" alt="SismoAlerta" class="logo-img">
-            <span class="logo-text">Sismo<span>Alerta</span></span>
-          </a>
-          <p class="footer-brand-desc">Tecnologia inteligente para prevenção de desastres e proteção de vidas em comunidades de risco.</p>
-          <a href="mailto:contato@sismoalerta.com.br" class="footer-contact-link">
-            <i class="fa-regular fa-envelope"></i>
-            contato@sismoalerta.com.br
-          </a>
-          <div class="footer-socials">
-            <a href="https://wa.me/5511986926518" class="footer-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="https://instagram.com/sismoalerta" class="footer-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          </div>
-        </div>
-
-        <div>
-          <div class="footer-col-title">Produto</div>
-          <a href="Funcionalidades.html" class="footer-col-link">Funcionalidades</a>
-          <a href="Especificações.html" class="footer-col-link">Especificações técnicas</a>
-          <a href="Preço.html" class="footer-col-link">Planos e preços</a>
-          <a href="Criar-Conta.html" class="footer-col-link">Criar conta</a>
-        </div>
-
-        <div>
-          <div class="footer-col-title">Empresa</div>
-          <a href="sobre.html" class="footer-col-link">Sobre nós</a>
-          <a href="sobre.html#missao" class="footer-col-link">Missão e visão</a>
-          <a href="gerencie-sua-conta.html" class="footer-col-link">Minha conta</a>
-        </div>
-
-        <div>
-          <div class="footer-col-title">Suporte</div>
-          <a href="https://wa.me/5511986926518" class="footer-col-link">Fale conosco</a>
-          <a href="ajuda-termos-privacidade.html" class="footer-col-link">Central de ajuda</a>
-          <a href="ajuda-termos-privacidade.html" class="footer-col-link">Termos e privacidade</a>
-        </div>
-
-      </div>
-
-      <div class="footer-bottom">
-        <p>© 2026 SismoAlerta. Todos os direitos reservados.</p>
-        <div class="footer-bottom-links">
-          <a href="ajuda-termos-privacidade.html">Termos</a>
-          <a href="ajuda-termos-privacidade.html">Privacidade</a>
-          <a href="https://wa.me/5511986926518">Contato</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- MODAL RECUPERAÇÃO DE SENHA -->
-  <div class="modal-recovery" id="modalRecovery">
-    <div class="modal-content">
-      <button class="modal-close" onclick="toggleModal(false)"><i class="fa-solid fa-xmark"></i></button>
-
-      <div id="recoveryFormBody">
-        <h2>Recuperar Senha</h2>
-        <p>Insira o e-mail associado à sua conta. Enviaremos um link seguro para você redefinir sua credencial.</p>
-
-        <div class="form-group" style="text-align:left;">
-          <label class="form-label" for="emailRecuperar">E-mail de Cadastro</label>
-          <div class="input-wrap">
-            <i class="fa-regular fa-envelope input-icon" aria-hidden="true"></i>
-            <input type="email" id="emailRecuperar" placeholder="seu@email.com">
-          </div>
-        </div>
-
-        <button class="btn-submit-recovery" onclick="enviarLinkRecuperacao()">
-          <i class="fa-solid fa-paper-plane"></i>
-          Enviar Link de Redefinição
-        </button>
-      </div>
-
-      <div class="feedback-recovery" id="recoverySuccessBody">
-        <i class="fa-solid fa-circle-check"></i>
-        <h2>E-mail Enviado!</h2>
-        <p>Se o endereço inserido estiver cadastrado, você receberá as instruções de redefinição em instantes.</p>
-        <button class="btn-submit-recovery" style="background:#0f1523;" onclick="toggleModal(false)">
-          <i class="fa-solid fa-xmark"></i>
-          Fechar Janela
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    function toggleModal(abrir) {
-      const modal = document.getElementById("modalRecovery");
-      const formBody = document.getElementById("recoveryFormBody");
-      const successBody = document.getElementById("recoverySuccessBody");
+    
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault(); 
+      
+      const email = document.getElementById("email").value;
 
-      if (abrir) {
-        modal.classList.add("active");
-        formBody.style.display = "block";
-        successBody.style.display = "none";
-        document.getElementById("emailRecuperar").value = "";
-      } else {
-        modal.classList.remove("active");
+      if (email) {
+        const tokenFake = "Bearer_ssalerta_" + btoa(email) + "_" + new Date().getTime();
+        
+        localStorage.setItem("userToken", tokenFake);
+        localStorage.setItem("emailCliente", email);
+        
+        if(email.toLowerCase().includes("murilo")) {
+          localStorage.setItem("nomeCliente", "Murilo Monteiro");
+        } else {
+          localStorage.setItem("nomeCliente", "Usuário SismoAlerta");
+        }
+        
+        // REDIRECIONA DIRETO PARA A TELA INICIAL
+        window.location.href = "Index.html";
       }
-    }
-
-    function enviarLinkRecuperacao() {
-      const emailInput = document.getElementById("emailRecuperar");
-
-      if (!emailInput.value || !emailInput.checkValidity()) {
-        alert("Por favor, digite um e-mail válido.");
-        return;
-      }
-
-      const btn = document.querySelector(".btn-submit-recovery");
-      btn.innerHTML = '⏳ Enviando...';
-      btn.style.pointerEvents = "none";
-
-      setTimeout(() => {
-        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar Link de Redefinição';
-        btn.style.pointerEvents = "auto";
-        document.getElementById("recoveryFormBody").style.display = "none";
-        document.getElementById("recoverySuccessBody").style.display = "block";
-      }, 1500);
-    }
-
-    // Fechar modal ao clicar fora
-    document.getElementById("modalRecovery").addEventListener("click", function(e) {
-      if (e.target === this) toggleModal(false);
     });
+
   </script>
 
 </body>
