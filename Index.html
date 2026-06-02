@@ -7,6 +7,47 @@
   <link rel="stylesheet" href="Index.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <title>SismoAlerta — Detecção Inteligente de Deslizamentos</title>
+  <style>
+    /* Estilos para o menu do usuário logado na barra de navegação — Padronizado */
+    .user-logged-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3b6bff;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-logout {
+      background: #ff3b3b;
+      color: #ffffff !important;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-logout:hover {
+      background: #d32f2f;
+    }
+  </style>
 </head>
 
 <body>
@@ -141,7 +182,7 @@
 
         <div class="feature-card">
           <div class="feature-icon">
-            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-bell-ring"></i>
           </div>
           <h3>Alertas Instantâneos</h3>
           <p>Notificações via app, SMS e sirene local em menos de 3 segundos após a detecção de risco iminente.</p>
@@ -240,6 +281,12 @@
             <a href="https://instagram.com/sismoalerta" class="social-link" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
+            <a href="https://www.linkedin.com/company/sismoalerta" class="social-link" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="https://twitter.com/sismoalerta" class="social-link" aria-label="X (Twitter)">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
           </div>
         </div>
 
@@ -274,12 +321,53 @@
         <p>© 2026 SismoAlerta. Todos os direitos reservados.</p>
         <div class="footer-bottom-links">
           <a href="ajuda-termos-privacidade.html">Termos</a>
-          <a href="ajuda-termos-privacidade.html">Privacidade</a>
+          <a href="ajuda-termos-privacidade.html">Privacy</a>
           <a href="https://wa.me/5511986926518">Contato</a>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- SCRIPT DE GERENCIAMENTO DE LOGIN/LOGOUT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const token = localStorage.getItem("userToken");
+      const nome = localStorage.getItem("nomeCliente") || "Usuário";
+      const navContainer = document.querySelector("header nav");
+      
+      if (token && navContainer) {
+        // Encontra e remove os botões padrão de "Entrar" e "Comprar" da nav do Index
+        const btnEntrar = navContainer.querySelector('.btn-outline');
+        const btnComprar = navContainer.querySelector('.btn-primary');
+        const divisor = navContainer.querySelector('.nav-divider');
+        
+        if(btnEntrar) btnEntrar.remove();
+        if(btnComprar) btnComprar.remove();
+        if(divisor) divisor.remove();
+        
+        // Pega as duas primeiras iniciais do nome do cliente logado
+        const loggedUserInitials = nome.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+        
+        // Insere o Avatar e o Botão Sair mantendo o padrão correto
+        navContainer.insertAdjacentHTML("beforeend", `
+          <div class="user-logged-menu">
+            <a href="gerencie-sua-conta.html" class="avatar-circle" title="Ver Perfil">${loggedUserInitials}</a>
+            <a href="javascript:void(0)" id="btnEfetuarLogoutCheckout" class="btn-logout">
+              <i class="fa-solid fa-sign-out-alt"></i> Sair
+            </a>
+          </div>
+        `);
+
+        // Evento de Logout limpando o localStorage
+        document.getElementById("btnEfetuarLogoutCheckout").addEventListener("click", function() {
+          if (confirm("Tem certeza que deseja sair da sua conta?")) {
+            localStorage.clear();
+            window.location.reload();
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
