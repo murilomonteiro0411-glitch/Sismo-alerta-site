@@ -121,6 +121,43 @@
       background: var(--blue-dark);
     }
 
+    /* ESTILOS DA NAVBAR PARA USUÁRIO LOGADO */
+    .user-logged-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-logout {
+      background: #ff3b3b;
+      color: var(--white) !important;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .btn-logout:hover {
+      background: #d32f2f;
+    }
+
     /* ================= MAIN CONTENT CONTAINER ================= */
     .container {
       max-width: 1200px;
@@ -183,7 +220,7 @@
       font-size: 22px;
     }
 
-    /* INPUT CONTROLS (ESTILO AUTENTICAÇÃO) */
+    /* INPUT CONTROLS */
     .campo {
       display: flex;
       flex-direction: column;
@@ -411,7 +448,7 @@
       <nav>
         <a href="Index.html">Início</a>
         <a href="Funcionalidades.html">Funcionalidades</a>
-        <a href="Especificações.html">Especificações</a>
+        <a href="Especificacoes.html">Especificações</a>
         <a href="Preço.html">Preços</a>
         <a href="Entrar-Conta.html">Entrar</a>
         <a href="Preço.html" class="btn-nav">Comprar</a>
@@ -558,7 +595,7 @@
         <a href="https://wa.me/5511986926518">Contato</a>
         <a href="ajuda-termos-privacidade.html">Ajuda</a>
         <a href="ajuda-termos-privacidade.html">Termos</a>
-        <a href="ajuda-termos-privacidade.html">Privacidade</a>
+        <a href="ajuda-termos-privacidade.html">Privacy</a>
       </div>
 
     </div>
@@ -571,14 +608,59 @@
 
   <!-- CONTROLE DATA JAVASCRIPT -->
   <script>
-    // Carregar dados armazenados no LocalStorage ao iniciar a página
+    // Executa imediatamente ao iniciar a página
     window.onload = function() {
+      const token = localStorage.getItem("userToken");
+      
+      // PROTEÇÃO DE TELA: Se não houver token de login, manda de volta pra tela de autenticação
+      if (!token) {
+        alert("Acesso restrito. Por favor, faça login para gerenciar sua conta.");
+        window.location.href = "Entrar-Conta.html";
+        return;
+      }
+
+      // Preenche os campos do formulário com dados salvos
       document.getElementById("nome").value = localStorage.getItem("nomeCliente") || "";
       document.getElementById("cpf").value = localStorage.getItem("cpfCliente") || "";
       document.getElementById("endereco").value = localStorage.getItem("enderecoCliente") || "";
       document.getElementById("cidade").value = localStorage.getItem("cidadeCliente") || "";
 
       carregarPedidos();
+      configurarNavbarDinamica(token);
+    }
+
+    // Gerencia a troca de botões normais pelo menu logado na Navbar
+    function configurarNavbarDinamica(token) {
+      const nome = localStorage.getItem("nomeCliente") || "Usuário";
+      const navContainer = document.querySelector("header nav");
+      
+      if (token && navContainer) {
+        const btnEntrar = navContainer.querySelector('a[href="Entrar-Conta.html"]');
+        const btnComprar = navContainer.querySelector('.btn-nav');
+        
+        if(btnEntrar) btnEntrar.remove();
+        if(btnComprar) btnComprar.remove();
+        
+        // Gera as iniciais do nome do usuário logado
+        const iniciais = nome.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+        
+        navContainer.insertAdjacentHTML("beforeend", `
+          <div class="user-logged-menu">
+            <a href="gerencie-sua-conta.html" class="avatar-circle" title="Ver Perfil">${iniciais}</a>
+            <a href="javascript:void(0)" id="btnEfetuarLogoutPainel" class="btn-logout">
+              <i class="fa-solid fa-sign-out-alt"></i> Sair da Conta
+            </a>
+          </div>
+        `);
+
+        // Escuta o evento do botão vermelho de deslogar
+        document.getElementById("btnEfetuarLogoutPainel").addEventListener("click", function() {
+          if (confirm("Tem certeza que deseja sair da sua conta?")) {
+            localStorage.clear();
+            window.location.href = "Index.html"; // Retorna para o index após deslogar
+          }
+        });
+      }
     }
 
     // Salvar informações no LocalStorage
@@ -589,6 +671,7 @@
       localStorage.setItem("cidadeCliente", document.getElementById("cidade").value);
 
       alert("Dados atualizados com sucesso!");
+      window.location.reload(); // Recarrega para atualizar a fotinha se o nome mudou
     }
 
     // Carregar dados de compras simuladas
