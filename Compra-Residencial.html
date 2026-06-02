@@ -8,11 +8,51 @@
   <link rel="stylesheet" href="Compra-Residencial.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <style>
+    /* Estilos para o menu do usuário logado na barra de navegação */
+    .user-logged-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3b6bff;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-logout {
+      background: #ff3b3b;
+      color: #ffffff !important;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-logout:hover {
+      background: #d32f2f;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="header-inner">
       <a href="Index.html" class="logo-wrap">
@@ -32,7 +72,6 @@
     </div>
   </header>
 
-  <!-- CHECKOUT STEPS BAR -->
   <div class="checkout-bar">
     <div class="checkout-bar-inner">
       <div class="checkout-steps">
@@ -61,10 +100,8 @@
   <main>
     <div class="pagina">
 
-      <!-- FORM SIDE -->
       <div class="formulario-wrap">
 
-        <!-- DADOS PESSOAIS -->
         <div class="form-card">
           <div class="form-card-header">
             <i class="fa-solid fa-user" aria-hidden="true"></i>
@@ -87,7 +124,6 @@
           </div>
         </div>
 
-        <!-- ENDEREÇO -->
         <div class="form-card">
           <div class="form-card-header">
             <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
@@ -135,7 +171,6 @@
           </div>
         </div>
 
-        <!-- PAGAMENTO -->
         <div class="form-card">
           <div class="form-card-header">
             <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
@@ -163,7 +198,6 @@
 
       </div>
 
-      <!-- ORDER SUMMARY -->
       <div class="resumo">
 
         <div class="resumo-header">
@@ -172,7 +206,6 @@
 
         <div class="resumo-body">
 
-          <!-- Product -->
           <div class="produto">
             <div class="produto-img-wrap">
               <img src="imagens/produto.jpeg" alt="TerraScan">
@@ -192,7 +225,6 @@
             <div class="preco-unidade">R$&nbsp;1.290,00</div>
           </div>
 
-          <!-- Totals -->
           <div class="valores">
             <p>
               <span>Subtotal</span>
@@ -228,7 +260,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-top">
@@ -249,8 +280,6 @@
             </a>
             <a href="https://instagram.com/sismoalerta" class="social-link" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
-            </a>
-            </a>
             </a>
           </div>
         </div>
@@ -278,245 +307,281 @@
         </div>
 
       </div>
-
-     
-        </div>
-      </div>
     </div>
   </footer>
 
-  <!-- JS ORIGINAL INTOCADO -->
   <script>
-let preco = 1290;
-let quantidade = 1;
+    let preco = 1290;
+    let quantidade = 1;
 
-document.getElementById("cep").addEventListener("input", function(e) {
-  let valor = e.target.value.replace(/\D/g, '').substring(0,8);
-  valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
-  e.target.value = valor;
-});
+    // Gerenciador de Estado do Menu (Login/Logout)
+    document.addEventListener("DOMContentLoaded", function() {
+      const token = localStorage.getItem("userToken");
+      const nome = localStorage.getItem("nomeCliente") || "Usuário";
+      const navContainer = document.querySelector("header nav");
+      
+      if (token && navContainer) {
+        const btnEntrar = navContainer.querySelector('.btn-outline');
+        const btnComprar = navContainer.querySelector('.btn-primary-nav');
+        const divisor = navContainer.querySelector('.nav-divider');
+        
+        if(btnEntrar) btnEntrar.remove();
+        if(btnComprar) btnComprar.remove();
+        if(divisor) divisor.remove();
+        
+        const loggedUserInitials = nome.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+        
+        navContainer.insertAdjacentHTML("beforeend", `
+          <div class="user-logged-menu">
+            <a href="gerencie-sua-conta.html" class="avatar-circle" title="Ver Perfil">${loggedUserInitials}</a>
+            <a href="javascript:void(0)" id="btnEfetuarLogoutCheckout" class="btn-logout">
+              <i class="fa-solid fa-sign-out-alt"></i> Sair
+            </a>
+          </div>
+        `);
 
-function buscarCEP() {
-  let cep = document.getElementById("cep").value.replace(/\D/g, '');
-  if (cep.length !== 8) { alert("CEP inválido!"); return; }
-  fetch(`https://viacep.com.br/ws/${cep}/json/`)
-    .then(res => res.json())
-    .then(dados => {
-      if (dados.erro) return alert("CEP não encontrado!");
-      document.getElementById("endereco").value = dados.logradouro;
-      document.getElementById("bairro").value = dados.bairro;
-      document.getElementById("cidade").value = dados.localidade;
-      document.getElementById("estado").value = dados.uf;
-    })
-    .catch(() => alert("Erro ao buscar CEP!"));
-}
+        document.getElementById("btnEfetuarLogoutCheckout").addEventListener("click", function() {
+          if (confirm("Tem certeza que deseja sair da sua conta?")) {
+            localStorage.clear();
+            window.location.reload();
+          }
+        });
+      }
+    });
 
-function salvarDados() {
-  localStorage.setItem("nomeCliente", document.getElementById("nome").value);
-  localStorage.setItem("cpfCliente", document.getElementById("cpf").value);
-  localStorage.setItem("cepCliente", document.getElementById("cep").value);
-  localStorage.setItem("enderecoCliente", document.getElementById("endereco").value);
-  localStorage.setItem("numeroCliente", document.getElementById("numero").value);
-  localStorage.setItem("bairroCliente", document.getElementById("bairro").value);
-  localStorage.setItem("cidadeCliente", document.getElementById("cidade").value);
-  localStorage.setItem("estadoCliente", document.getElementById("estado").value);
-  localStorage.setItem("quantidade", quantidade);
-  localStorage.setItem("valorTotal", document.getElementById("total").innerText);
-  let parcelas = document.getElementById("parcelas");
-  if(parcelas){ localStorage.setItem("parcelas", parcelas.value); } else { localStorage.removeItem("parcelas"); }
-  let tipo = document.querySelector("select").value;
-  localStorage.setItem("tipoPagamento", tipo);
-  localStorage.setItem("numeroPedido", Math.floor(Math.random()*1000000));
-}
+    document.getElementById("cep").addEventListener("input", function(e) {
+      let valor = e.target.value.replace(/\D/g, '').substring(0,8);
+      valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
+      e.target.value = valor;
+    });
 
-function validarCartao(numero) {
-  numero = numero.replace(/\s+/g, '');
-  if (!/^\d+$/.test(numero)) return false;
-  let soma = 0, alt = false;
-  for (let i = numero.length - 1; i >= 0; i--) {
-    let n = parseInt(numero[i]);
-    if (alt) { n *= 2; if (n > 9) n -= 9; }
-    soma += n;
-    alt = !alt;
-  }
-  return soma % 10 === 0;
-}
-
-function validarValidade(data) {
-  if (!/^\d{2}\/\d{2}$/.test(data)) return false;
-  let [mes, ano] = data.split('/').map(Number);
-  let hoje = new Date();
-  let anoAtual = hoje.getFullYear() % 100;
-  let mesAtual = hoje.getMonth() + 1;
-  return mes >= 1 && mes <= 12 && !(ano < anoAtual || (ano === anoAtual && mes < mesAtual));
-}
-
-function validarCVV(cvv) { return /^\d{3,4}$/.test(cvv); }
-
-const bandeiras = [
-  { nome:"elo", regex:/^(401178|401179|431274|438935|451416|457631|504175|506699|509048|627780|636297|636368)/, img:"Elo-Bandeira.png", tamanho:16 },
-  { nome:"hipercard", regex:/^(606282)/, img:"Hipercard-Bandeira.jpg", tamanho:16 },
-  { nome:"diners", regex:/^(300|301|302|303|304|305|36|38)/, img:"DinersClub-Bandeira.jpg", tamanho:14 },
-  { nome:"amex", regex:/^3[47]/, img:"AmericanExpress-Bandeira.png", tamanho:15 },
-  { nome:"mastercard", regex:/^5[1-5]/, img:"MasterCard-Bandeira.png", tamanho:16 },
-  { nome:"visa", regex:/^4/, img:"Visa-Bandeira.png", tamanho:16 }
-];
-
-function identificarBandeira(numero) {
-  numero = numero.replace(/\s+/g, '');
-  return bandeiras.find(b => b.regex.test(numero)) || null;
-}
-
-document.addEventListener("input", function(e) {
-  if (e.target.id === "numero-cartao") {
-    let num = e.target.value.replace(/\D/g, '');
-    let bandeira = identificarBandeira(num);
-    let limite = bandeira ? bandeira.tamanho : 16;
-    num = num.substring(0, limite);
-    if (bandeira?.nome === "amex") { num = num.replace(/(\d{4})(\d{6})(\d{0,5})/, "$1 $2 $3"); }
-    else { num = num.replace(/(\d{4})(?=\d)/g, "$1 "); }
-    e.target.value = num.trim();
-    let img = document.getElementById("bandeira-img");
-    if (img) {
-      if (bandeira) { img.src = bandeira.img; img.style.display = "inline-block"; }
-      else { img.style.display = "none"; }
+    function buscarCEP() {
+      let cep = document.getElementById("cep").value.replace(/\D/g, '');
+      if (cep.length !== 8) { alert("CEP inválido!"); return; }
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(dados => {
+          if (dados.erro) return alert("CEP não encontrado!");
+          document.getElementById("endereco").value = dados.logradouro;
+          document.getElementById("bairro").value = dados.bairro;
+          document.getElementById("cidade").value = dados.localidade;
+          document.getElementById("estado").value = dados.uf;
+        })
+        .catch(() => alert("Erro ao buscar CEP!"));
     }
-    if (validarCartao(num)) { e.target.style.border = "2px solid #3baa70"; }
-    else { e.target.style.border = "2px solid #e04040"; }
-  }
-});
 
-function simularPagamento(numero){
-  numero = numero.replace(/\s+/g,'');
-  switch(numero){
-    case "4242424242424242": return { status: "aprovado", msg: "Pagamento aprovado!" };
-    case "4000000000000002": return { status: "recusado", msg: "Cartão recusado pelo banco." };
-    case "4000000000009995": return { status: "fundos", msg: "Saldo insuficiente." };
-    case "4000000000000069": return { status: "bloqueado", msg: "Cartão bloqueado." };
-    case "4000000000000119": return { status: "erro", msg: "Erro na transação." };
-    default: return { status: "aprovado", msg: "Pagamento aprovado!" };
-  }
-}
+    function salvarDados() {
+      localStorage.setItem("nomeCliente", document.getElementById("nome").value);
+      localStorage.setItem("cpfCliente", document.getElementById("cpf").value);
+      localStorage.setItem("cepCliente", document.getElementById("cep").value);
+      localStorage.setItem("enderecoCliente", document.getElementById("endereco").value);
+      localStorage.setItem("numeroCliente", document.getElementById("numero").value);
+      localStorage.setItem("bairroCliente", document.getElementById("bairro").value);
+      localStorage.setItem("cidadeCliente", document.getElementById("cidade").value);
+      localStorage.setItem("estadoCliente", document.getElementById("estado").value);
+      localStorage.setItem("quantidade", quantidade);
+      localStorage.setItem("valorTotal", document.getElementById("total").innerText);
+      let parcelas = document.getElementById("parcelas");
+      if(parcelas){ localStorage.setItem("parcelas", parcelas.value); } else { localStorage.removeItem("parcelas"); }
+      let tipo = document.querySelector("select").value;
+      localStorage.setItem("tipoPagamento", tipo);
+      localStorage.setItem("numeroPedido", Math.floor(Math.random()*1000000));
+    }
 
-function formatar(v){ return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); }
+    function validarCartao(numero) {
+      numero = numero.replace(/\s+/g, '');
+      if (!/^\d+$/.test(numero)) return false;
+      let soma = 0, alt = false;
+      for (let i = numero.length - 1; i >= 0; i--) {
+        let n = parseInt(numero[i]);
+        if (alt) { n *= 2; if (n > 9) n -= 9; }
+        soma += n;
+        alt = !alt;
+      }
+      return soma % 10 === 0;
+    }
 
-function calcularDesconto(sub){
-  let tipo = document.querySelector("select").value;
-  let parcelas = document.getElementById("parcelas");
-  if (tipo==="pix"||tipo==="debito") return sub*0.10;
-  if (parcelas && parcelas.value=="1") return sub*0.10;
-  return 0;
-}
+    function validarValidade(data) {
+      if (!/^\d{2}\/\d{2}$/.test(data)) return false;
+      let [mes, ano] = data.split('/').map(Number);
+      let hoje = new Date();
+      let anoAtual = hoje.getFullYear() % 100;
+      let mesAtual = hoje.getMonth() + 1;
+      return mes >= 1 && mes <= 12 && !(ano < anoAtual || (ano === anoAtual && mes < mesAtual));
+    }
 
-function adicionar(){ quantidade++; atualizar(); }
-function remover(){ if(quantidade>0){ quantidade--; atualizar(); } }
+    function validarCVV(cvv) { return /^\d{3,4}$/.test(cvv); }
 
-function atualizar(){
-  let sub = preco*quantidade;
-  let desc = calcularDesconto(sub);
-  let total = sub-desc;
-  let parcelas = document.getElementById("parcelas");
-  if(parcelas){
-    let qtd = +parcelas.value;
-    if(qtd>=6&&qtd<=7) total*=1.15;
-    else if(qtd>=8) total*=1.18;
-  }
-  document.getElementById("subtotal").innerText = formatar(sub);
-  document.getElementById("desconto").innerText = "- "+formatar(desc);
-  document.getElementById("total").innerText = formatar(total);
-  document.getElementById("qtd").innerText = "(x"+quantidade+")";
-  // keep qty-display in sync
-  let qd = document.getElementById("qty-num");
-  if(qd) qd.innerText = quantidade;
-}
+    const bandeiras = [
+      { nome:"elo", regex:/^(401178|401179|431274|438935|451416|457631|504175|506699|509048|627780|636297|636368)/, img:"Elo-Bandeira.png", tamanho:16 },
+      { nome:"hipercard", regex:/^(606282)/, img:"Hipercard-Bandeira.jpg", tamanho:16 },
+      { nome:"diners", regex:/^(300|301|302|303|304|305|36|38)/, img:"DinersClub-Bandeira.jpg", tamanho:14 },
+      { nome:"amex", regex:/^3[47]/, img:"AmericanExpress-Bandeira.png", tamanho:15 },
+      { nome:"mastercard", regex:/^5[1-5]/, img:"MasterCard-Bandeira.png", tamanho:16 },
+      { nome:"visa", regex:/^4/, img:"Visa-Bandeira.png", tamanho:16 }
+    ];
 
-function confirmarCompra(){
-  let tipo = document.querySelector("select").value;
-  if(!tipo) return alert("Selecione o pagamento!");
-  if(quantidade===0) return alert("Adicione produto!");
-  if(tipo==="pix"){ salvarDados(); return location.href="pix.html"; }
-  if(tipo==="boleto"){ salvarDados(); return location.href="boleto.html"; }
-  let numero = document.getElementById("numero-cartao").value;
-  let nome = document.getElementById("nome-cartao").value;
-  let validade = document.getElementById("validade").value;
-  let cvv = document.getElementById("cvv").value;
-  let bandeira = identificarBandeira(numero);
-  if(!bandeira) return alert("Cartão inválido!");
-  if(!nome) return alert("Nome obrigatório!");
-  if(!validarValidade(validade)) return alert("Validade inválida!");
-  if(!validarCVV(cvv)) return alert("CVV inválido!");
-  let btn = document.querySelector(".btn-comprar");
-  btn.innerHTML = "⏳ Processando...";
-  btn.style.pointerEvents="none";
-  setTimeout(()=>{
-    let resultado = simularPagamento(numero);
-    btn.innerHTML = '<i class="fa-solid fa-lock"></i> Confirmar compra';
-    btn.style.pointerEvents = "auto";
-    if(resultado.status === "aprovado"){
+    function identificarBandeira(numero) {
+      numero = numero.replace(/\s+/g, '');
+      return bandeiras.find(b => b.regex.test(numero)) || null;
+    }
+
+    document.addEventListener("input", function(e) {
+      if (e.target.id === "numero-cartao") {
+        let num = e.target.value.replace(/\D/g, '');
+        let bandeira = identificarBandeira(num);
+        let limite = bandeira ? bandeira.tamanho : 16;
+        num = num.substring(0, limite);
+        if (bandeira?.nome === "amex") { num = num.replace(/(\d{4})(\d{6})(\d{0,5})/, "$1 $2 $3"); }
+        else { num = num.replace(/(\d{4})(?=\d)/g, "$1 "); }
+        e.target.value = num.trim();
+        let img = document.getElementById("bandeira-img");
+        if (img) {
+          if (bandeira) { img.src = bandeira.img; img.style.display = "inline-block"; }
+          else { img.style.display = "none"; }
+        }
+        if (validarCartao(num)) { e.target.style.border = "2px solid #3baa70"; }
+        else { e.target.style.border = "2px solid #e04040"; }
+      }
+    });
+
+    function simularPagamento(numero){
+      numero = numero.replace(/\s+/g,'');
+      switch(numero){
+        case "4242424242424242": return { status: "aprovado", msg: "Pagamento aprovado!" };
+        case "4000000000000002": return { status: "recusado", msg: "Cartão recusado pelo banco." };
+        case "40000000000000995": return { status: "fundos", msg: "Saldo insuficiente." };
+        case "4000000000000069": return { status: "bloqueado", msg: "Cartão bloqueado." };
+        case "4000000000000119": return { status: "erro", msg: "Erro na transação." };
+        default: return { status: "aprovado", msg: "Pagamento aprovado!" };
+      }
+    }
+
+    function formatar(v){ return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); }
+
+    function calcularDesconto(sub){
+      let tipo = document.querySelector("select").value;
+      let parcelas = document.getElementById("parcelas");
+      if (tipo==="pix"||tipo==="debito") return sub*0.10;
+      if (parcelas && parcelas.value=="1") return sub*0.10;
+      return 0;
+    }
+
+    function adicionar(){ quantidade++; atualizar(); }
+    function remover(){ if(quantidade>0){ quantidade--; atualizar(); } }
+
+    function atualizar(){
+      let sub = preco*quantidade;
+      let desc = calcularDesconto(sub);
+      let total = sub-desc;
       let parcelas = document.getElementById("parcelas");
       if(parcelas){
-        let qtd = parseInt(parcelas.value);
-        let total = preco * quantidade;
-        let desconto = calcularDesconto(total);
-        total -= desconto;
-        if (qtd >= 6 && qtd <= 7) total *= 1.15;
-        else if (qtd >= 8 && qtd <= 10) total *= 1.18;
-        let valorParcela = total / qtd;
-        localStorage.setItem("parcelas", qtd);
-        localStorage.setItem("valorParcela", valorParcela.toFixed(2));
+        let qtd = +parcelas.value;
+        if(qtd>=6&&qtd<=7) total*=1.15;
+        else if(qtd>=8) total*=1.18;
       }
-      salvarDados();
-      alert("✅ Pagamento autorizado");
-      location.href = "pagamento-aprovado.html";
+      document.getElementById("subtotal").innerText = formatar(sub);
+      document.getElementById("desconto").innerText = "- "+formatar(desc);
+      document.getElementById("total").innerText = formatar(total);
+      document.getElementById("qtd").innerText = "(x"+quantidade+")";
+      let qd = document.getElementById("qty-num");
+      if(qd) qd.innerText = quantidade;
     }
-    else if(resultado.status === "recusado"){ alert("❌ " + resultado.msg); }
-    else if(resultado.status === "fundos"){ alert("💸 " + resultado.msg); }
-    else if(resultado.status === "bloqueado"){ alert("🔒 " + resultado.msg); }
-    else{ alert("⚠️ " + resultado.msg); }
-  }, 2000);
-}
 
-function mostrarPagamento(tipo){
-  let area = document.getElementById("area-pagamento");
-  if(tipo==="credito"||tipo==="debito"){
-    area.innerHTML = `
-    ${tipo==="credito"?`
-    <div class="campo full">
-      <label>Parcelas</label>
-      <select id="parcelas" onchange="atualizar()">
-        <option value="1">1× sem juros (10% OFF)</option>
-        <option value="2">2× sem juros</option>
-        <option value="3">3× sem juros</option>
-        <option value="4">4× sem juros</option>
-        <option value="5">5× sem juros</option>
-        <option value="6">6× (+15%)</option>
-        <option value="8">8× (+18%)</option>
-      </select>
-    </div>`:""}
-    <div class="campo full">
-      <label>Número do cartão</label>
-      <div class="input-with-badge">
-        <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000">
-        <img id="bandeira-img" alt="bandeira">
-      </div>
-    </div>
-    <div class="campo full">
-      <label>Nome no cartão</label>
-      <input type="text" id="nome-cartao" placeholder="Nome como está no cartão">
-    </div>
-    <div class="campo">
-      <label>Validade</label>
-      <input type="text" id="validade" placeholder="MM/AA">
-    </div>
-    <div class="campo">
-      <label>CVV</label>
-      <input type="text" id="cvv" placeholder="•••">
-    </div>`;
-  } else {
-    area.innerHTML="";
-  }
-  atualizar();
-}
+    function confirmarCompra(){
+      let tipo = document.querySelector("select").value;
+      if(!tipo) return alert("Selecione o pagamento!");
+      if(quantidade===0) return alert("Adicione produto!");
+      if(tipo==="pix"){ salvarDados(); return location.href="pix.html"; }
+      if(tipo==="boleto"){ salvarDados(); return location.href="boleto.html"; }
+      let numero = document.getElementById("numero-cartao").value;
+      let nome = document.getElementById("nome-cartao").value;
+      let validade = document.getElementById("validade").value;
+      let cvv = document.getElementById("cvv").value;
+      let bandeira = identificarBandeira(numero);
+      if(!bandeira) return alert("Cartão inválido!");
+      if(!nome) return alert("Nome obrigatório!");
+      if(!validarValidade(validade)) return alert("Validade inválida!");
+      if(!validarCVV(cvv)) return alert("CVV inválido!");
+      let btn = document.querySelector(".btn-comprar");
+      btn.innerHTML = "⏳ Processando...";
+      btn.style.pointerEvents="none";
+      setTimeout(()=>{
+        let resultado = simularPagamento(numero);
+        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Confirmar compra';
+        btn.style.pointerEvents = "auto";
+        if(resultado.status === "aprovado"){
+          let parcelas = document.getElementById("parcelas");
+          if(parcelas){
+            let qtd = parseInt(parcelas.value);
+            let total = preco * quantidade;
+            let desconto = calcularDesconto(total);
+            total -= desconto;
+            if (qtd >= 6 && qtd <= 7) total *= 1.15;
+            else if (qtd >= 8 && qtd <= 10) total *= 1.18;
+            let valorParcela = total / qtd;
+            localStorage.setItem("parcelas", qtd);
+            localStorage.setItem("valorParcela", valorParcela.toFixed(2));
+          }
+          salvarDados();
+          alert("✅ Pagamento autorizado");
+          location.href = "pagamento-aprovado.html";
+        }
+        else if(resultado.status === "recusado"){ alert("❌ " + resultado.msg); }
+        else if(resultado.status === "fundos"){ alert("💸 " + resultado.msg); }
+        else if(resultado.status === "bloqueado"){ alert("🔒 " + resultado.msg); }
+        else{ alert("⚠️ " + resultado.msg); }
+      }, 2000);
+    }
+
+    function mostrarPagamento(tipo){
+      let area = document.getElementById("area-pagamento");
+      if(tipo === "credito" || tipo === "debito"){
+        let htmlCampos = '';
+        
+        if(tipo === "credito"){
+          htmlCampos += `
+          <div class="campo full">
+            <label>Parcelas</label>
+            <select id="parcelas" onchange="atualizar()">
+              <option value="1">1× sem juros (10% OFF)</option>
+              <option value="2">2× sem juros</option>
+              <option value="3">3× sem juros</option>
+              <option value="4">4× sem juros</option>
+              <option value="5">5× sem juros</option>
+              <option value="6">6× (+15%)</option>
+              <option value="8">8× (+18%)</option>
+            </select>
+          </div>`;
+        }
+
+        htmlCampos += `
+        <div class="campo full">
+          <label>Número do cartão</label>
+          <div class="input-with-badge">
+            <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000">
+            <img id="bandeira-img" alt="bandeira">
+          </div>
+        </div>
+        <div class="campo full">
+          <label>Nome no cartão</label>
+          <input type="text" id="nome-cartao" placeholder="Nome como está no cartão">
+        </div>
+        <div class="campo">
+          <label>Validade</label>
+          <input type="text" id="validade" placeholder="MM/AA">
+        </div>
+        <div class="campo">
+          <label>CVV</label>
+          <input type="text" id="cvv" placeholder="•••">
+        </div>`;
+        
+        area.innerHTML = htmlCampos;
+      } else {
+        area.innerHTML = "";
+      }
+      atualizar();
+    }
   </script>
 
 </body>
