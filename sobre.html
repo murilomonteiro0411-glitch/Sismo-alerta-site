@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <title>Quem Somos — SismoAlerta</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+    :root {
+      --blue: #3b6bff;
+      --blue-light: #eef2ff;
+      --blue-dark: #1a3db5;
+      --night: #080b14;
+      --night-2: #0e1220;
+      --white: #ffffff;
+      --gray-1: #f7f8fc;
+      --gray-2: #e8ebf4;
+      --gray-3: #c4c9dc;
+      --gray-4: #8890aa;
+      --text: #0f1523;
+      --text-muted: #6b7390;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.06);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      background: var(--night);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: auto;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text span {
+      color: var(--blue);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      color: var(--gray-3);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    .btn-nav {
+      background: var(--blue);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .btn-nav:hover {
+      background: var(--blue-dark);
+    }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      background: linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 80px 20px;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--gray-4);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ================= CONTEÚDO CORPO ================= */
+    .container {
+      max-width: 1200px;
+      margin: -40px auto 100px;
+      padding: 0 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .card-mvv {
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .card-mvv:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--blue);
+    }
+
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      background: var(--blue-light);
+      color: var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .icon-box .material-symbols-outlined {
+      font-size: 32px;
+    }
+
+    .card-mvv h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .card-mvv p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      background: var(--night);
+      color: var(--white);
+      padding: 80px 40px 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .footer-brand {
+      max-width: 320px;
+    }
+
+    .logo-footer {
+      height: 44px;
+      width: auto;
+      margin-bottom: 16px;
+      object-fit: contain;
+    }
+
+    .footer-brand h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand h2 span {
+      color: var(--blue);
+    }
+
+    .footer-brand p {
+      font-size: 13.5px;
+      color: var(--gray-4);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .footer-brand strong {
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    .footer-col a {
+      color: var(--gray-4);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-col a:hover {
+      color: var(--blue);
+      transform: translateX(4px);
+    }
+
+    .redes {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .icone {
+      font-size: 18px;
+      color: var(--gray-3);
+      background: rgba(255, 255, 255, 0.05);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .icone:hover {
+      background: var(--blue);
+      color: var(--white);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 60px auto 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-4);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 992px) {
+      .card-grid { grid-template-columns: 1fr; gap: 24px; }
+      .container { padding: 0 20px; margin-top: -20px; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="Index.html" class="logo-wrap">
+        <img src="Logo.jpeg" alt="Logo SismoAlerta" class="logo-img">
+        <span class="logo-text">Sismo<span>Alerta</span></span>
+      </a>
+      <nav>
+        <a href="Index.html">Início</a>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Como-Funciona.html">Como funciona</a>
+        <a href="Especificações.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+        <a href="Criar-Conta.html">Junte-se a nós</a>
+        <a href="Entrar-Conta.html">Entrar</a>
+        <a href="Preço.html" class="btn-nav">Comprar</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>Nossa Cultura</h1>
+    <p>Conheça os pilares éticos e operacionais que orientam a engenharia do SismoAlerta.</p>
+  </div>
+
+  <div class="container">
+    <div class="card-grid">
+      
+      <div class="card-mvv">
+        <div class="icon-box"><span class="material-symbols-outlined">rocket_launch</span></div>
+        <h3>Nossa Missão</h3>
+        <p>Desenvolver soluções inovadoras em hardware e software que monitorem de forma preditiva os solos, minimizando o impacto de desastres geológicos e resguardando vidas de deslizamentos e sinistros de terra.</p>
+      </div>
+
+      <div class="card-mvv">
+        <div class="icon-box"><span class="material-symbols-outlined">visibility</span></div>
+        <h3>Nossa Visão</h3>
+        <p>Tornar-se a principal referência em tecnologia de detecção geológica civil no Brasil, integrando comunidades de risco às defesas civis de forma automatizada e inteligente.</p>
+      </div>
+
+      <div class="card-mvv">
+        <div class="icon-box"><span class="material-symbols-outlined">diversity_1</span></div>
+        <h3>Nossos Valores</h3>
+        <p>Preservação incondicional da integridade humana, inovação em engenharia de sensores, responsabilidade estrita com dados coletados e total transparência com o mercado.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="Logo.jpeg" alt="Logo SismoAlerta" class="logo-footer">
+        <h2>Sismo<span>Alerta</span></h2>
+        <p>Desenvolvendo hardware avançado e engenharia de software inteligente para a prevenção ativa de deslizamentos de terra e proteção de vidas.</p>
+        <strong>SismoAlerta@gmail.com</strong>
+        <div class="redes">
+          <a href="https://wa.me/5511986926518" class="icone"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://instagram.com/lima_mkz" class="icone"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@lima_mkz" target="_blank" class="icone"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://twitter.com/seu_usuario" class="icone"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Produto</h3>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Como-Funciona.html">Como funciona</a>
+        <a href="Especificações.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+      </div>
+      <div class="footer-col">
+        <h3>Empresa</h3>
+        <a href="sobre.html">Missão</a>
+        <a href="sobre.html">Visão</a>
+        <a href="sobre.html">Valores</a>
+        <a href="gerencie-sua-conta.html">Gerencie sua conta</a>
+      </div>
+      <div class="footer-col">
+        <h3>Suporte</h3>
+        <a href="https://wa.me/5511986926518">Contato</a>
+        <a href="ajuda-termos-privacidade.html">Ajuda</a>
+        <a href="ajuda-termos-privacidade.html">Termos</a>
+        <a href="ajuda-termos-privacidade.html">Privacidade</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 SismoAlerta. Todos os direitos reservados. Tecnologia voltada para a prevenção e monitoramento de solo.
+    </div>
+  </footer>
+
+</body>
+</html>

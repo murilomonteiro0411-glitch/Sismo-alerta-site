@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <title>Gerenciar Conta — SismoAlerta</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+    :root {
+      --blue: #3b6bff;
+      --blue-light: #eef2ff;
+      --blue-dark: #1a3db5;
+      --night: #080b14;
+      --night-2: #0e1220;
+      --white: #ffffff;
+      --gray-1: #f7f8fc;
+      --gray-2: #e8ebf4;
+      --gray-3: #c4c9dc;
+      --gray-4: #8890aa;
+      --text: #0f1523;
+      --text-muted: #6b7390;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.06);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      background: var(--night);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: auto;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text span {
+      color: var(--blue);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      color: var(--gray-3);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    .btn-nav {
+      background: var(--blue);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .btn-nav:hover {
+      background: var(--blue-dark);
+    }
+
+    /* ================= MAIN CONTENT CONTAINER ================= */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto 80px;
+      padding: 0 40px;
+    }
+
+    .titulo {
+      margin-bottom: 36px;
+    }
+
+    .titulo h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    /* ================= GRID DASHBOARD ================= */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-2);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .card h2 .material-symbols-outlined {
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      font-size: 22px;
+    }
+
+    /* INPUT CONTROLS (ESTILO AUTENTICAÇÃO) */
+    .campo {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+    }
+
+    .campo label {
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      color: var(--gray-4);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .campo input {
+      width: 100%;
+      height: 46px;
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-sm);
+      padding: 0 16px 0 48px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .campo input:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(59, 107, 255, 0.1);
+    }
+
+    /* BOTÕES PREFERENCIAIS */
+    .salvar {
+      margin-top: auto;
+      height: 46px;
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .salvar:hover {
+      background: var(--blue-dark);
+    }
+
+    /* ELEMENTO DE PEDIDOS */
+    .pedido {
+      background: var(--gray-1);
+      border: 1px solid var(--gray-2);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-size: 14.5px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .pedido-vazio {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      font-style: italic;
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      background: var(--night);
+      color: var(--white);
+      padding: 80px 40px 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .footer-brand {
+      max-width: 320px;
+    }
+
+    .logo-footer {
+      height: 44px;
+      width: auto;
+      margin-bottom: 16px;
+      object-fit: contain;
+    }
+
+    .footer-brand h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand h2 span {
+      color: var(--blue);
+    }
+
+    .footer-brand p {
+      font-size: 13.5px;
+      color: var(--gray-4);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .footer-brand strong {
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    .footer-col a {
+      color: var(--gray-4);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-col a:hover {
+      color: var(--blue);
+      transform: translateX(4px);
+    }
+
+    .redes {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .icone {
+      font-size: 18px;
+      color: var(--gray-3);
+      background: rgba(255, 255, 255, 0.05);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .icone:hover {
+      background: var(--blue);
+      color: var(--white);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 60px auto 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-4);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        padding: 0 20px;
+      }
+      .header-inner { padding: 0 20px; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="Index.html" class="logo-wrap">
+        <img src="imagens/logo2.png" alt="Logo SismoAlerta" class="logo-img">
+        <span class="logo-text">Sismo<span>Alerta</span></span>
+      </a>
+      <nav>
+        <a href="Index.html">Início</a>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Especificações.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+        <a href="Entrar-Conta.html">Entrar</a>
+        <a href="Preço.html" class="btn-nav">Comprar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTAINER CORE -->
+  <div class="container">
+
+    <div class="titulo">
+      <h1>Gerenciar Conta</h1>
+    </div>
+
+    <div class="grid">
+
+      <!-- DADOS PESSOAIS -->
+      <div class="card">
+        <h2>
+          <span class="material-symbols-outlined">person</span>
+          Dados pessoais
+        </h2>
+
+        <div class="campo">
+          <label for="nome">Nome Completo</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-user input-icon"></i>
+            <input type="text" id="nome" placeholder="Seu nome completo">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="cpf">CPF</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-id-card input-icon"></i>
+            <input type="text" id="cpf" placeholder="000.000.000-00">
+          </div>
+        </div>
+
+        <button class="salvar" onclick="salvarDados()">
+          <i class="fa-regular fa-floppy-disk"></i> Salvar Alterações
+        </button>
+      </div>
+
+      <!-- ENDEREÇO -->
+      <div class="card">
+        <h2>
+          <span class="material-symbols-outlined">home</span>
+          Endereço residencial
+        </h2>
+
+        <div class="campo">
+          <label for="endereco">Rua e Número</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-location-dot input-icon"></i>
+            <input type="text" id="endereco" placeholder="Av. Paulista, 1000">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="cidade">Cidade / Estado</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-city input-icon"></i>
+            <input type="text" id="cidade" placeholder="São Paulo - SP">
+          </div>
+        </div>
+
+        <button class="salvar" onclick="salvarDados()">
+          <i class="fa-regular fa-floppy-disk"></i> Salvar Endereço
+        </button>
+      </div>
+
+      <!-- SEUS PEDIDOS -->
+      <div class="card">
+        <h2>
+          <span class="material-symbols-outlined">shopping_bag</span>
+          Histórico de pedidos
+        </h2>
+
+        <div id="pedidos" style="margin-bottom: 20px;"></div>
+      </div>
+
+      <!-- SEGURANÇA -->
+      <div class="card">
+        <h2>
+          <span class="material-symbols-outlined">lock</span>
+          Segurança da conta
+        </h2>
+
+        <div class="campo">
+          <label for="novaSenha">Nova Senha</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="novaSenha" placeholder="••••••••">
+          </div>
+        </div>
+
+        <button class="salvar" onclick="atualizarSenha()">
+          <i class="fa-solid fa-key"></i> Atualizar Senha
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- MARCA -->
+      <div class="footer-brand">
+        <img src="imagens/logo2.png" alt="Logo SismoAlerta" class="logo-footer">
+        <h2>Sismo<span>Alerta</span></h2>
+        <p>Desenvolvendo hardware avançado e engenharia de software inteligente para a prevenção ativa de deslizamentos de terra e proteção de vidas.</p>
+        <strong>SismoAlerta@gmail.com</strong>
+
+        <div class="redes">
+          <a href="https://wa.me/5511986926518" class="icone"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://instagram.com/lima_mkz" class="icone"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <!-- LINKS PRODUTO -->
+      <div class="footer-col">
+        <h3>Produto</h3>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Como-Funciona.html">Como funciona</a>
+        <a href="Especificacoes.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+      </div>
+
+      <!-- LINKS EMPRESA -->
+      <div class="footer-col">
+        <h3>Empresa</h3>
+        <a href="sobre.html">Missão</a>
+        <a href="sobre.html">Visão</a>
+        <a href="sobre.html">Valores</a>
+        <a href="gerencie-sua-conta.html">Gerencie sua conta</a>
+      </div>
+
+      <!-- LINKS SUPORTE -->
+      <div class="footer-col">
+        <h3>Suporte</h3>
+        <a href="https://wa.me/5511986926518">Contato</a>
+        <a href="ajuda-termos-privacidade.html">Ajuda</a>
+        <a href="ajuda-termos-privacidade.html">Termos</a>
+        <a href="ajuda-termos-privacidade.html">Privacidade</a>
+      </div>
+
+    </div>
+
+    <!-- COPRYIGHT -->
+    <div class="footer-bottom">
+      © 2026 SismoAlerta. Todos os direitos reservados. Tecnologia voltada para a prevenção e monitoramento de solo.
+    </div>
+  </footer>
+
+  <!-- CONTROLE DATA JAVASCRIPT -->
+  <script>
+    // Carregar dados armazenados no LocalStorage ao iniciar a página
+    window.onload = function() {
+      document.getElementById("nome").value = localStorage.getItem("nomeCliente") || "";
+      document.getElementById("cpf").value = localStorage.getItem("cpfCliente") || "";
+      document.getElementById("endereco").value = localStorage.getItem("enderecoCliente") || "";
+      document.getElementById("cidade").value = localStorage.getItem("cidadeCliente") || "";
+
+      carregarPedidos();
+    }
+
+    // Salvar informações no LocalStorage
+    function salvarDados() {
+      localStorage.setItem("nomeCliente", document.getElementById("nome").value);
+      localStorage.setItem("cpfCliente", document.getElementById("cpf").value);
+      localStorage.setItem("enderecoCliente", document.getElementById("endereco").value);
+      localStorage.setItem("cidadeCliente", document.getElementById("cidade").value);
+
+      alert("Dados atualizados com sucesso!");
+    }
+
+    // Carregar dados de compras simuladas
+    function carregarPedidos() {
+      const area = document.getElementById("pedidos");
+      const pedido = localStorage.getItem("numeroPedido");
+      const valor = localStorage.getItem("valorTotal");
+
+      if (pedido) {
+        area.innerHTML = `
+          <div class="pedido">
+            <strong style="color: var(--blue);">Pedido #${pedido}</strong><br>
+            <span style="font-size: 13px; color: var(--text-muted)">Status: Processando Equipamento</span><br>
+            <span style="font-weight: 500;">Total: ${valor}</span>
+          </div>
+        `;
+      } else {
+        area.innerHTML = '<p class="pedido-vazio">Nenhum hardware ou plano contratado até o momento.</p>';
+      }
+    }
+
+    // Simulação de atualização de senha
+    function atualizarSenha() {
+      const senhaInput = document.getElementById("novaSenha");
+      if (senhaInput.value.trim() === "") {
+        alert("Por favor, insira uma nova credencial válida.");
+        return;
+      }
+      alert("Senha alterada com sucesso!");
+      senhaInput.value = "";
+    }
+  </script>
+
+</body>
+</html>

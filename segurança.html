@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <title>Segurança Cibernética — SismoAlerta</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+    :root {
+      --blue: #3b6bff;
+      --blue-light: #eef2ff;
+      --blue-dark: #1a3db5;
+      --night: #080b14;
+      --night-2: #0e1220;
+      --white: #ffffff;
+      --gray-1: #f7f8fc;
+      --gray-2: #e8ebf4;
+      --gray-3: #c4c9dc;
+      --gray-4: #8890aa;
+      --text: #0f1523;
+      --text-muted: #6b7390;
+      --radius-lg: 18px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      background: var(--night);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img { width: auto; height: 40px; object-fit: contain; }
+    .logo-text { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700; color: var(--white); }
+    .logo-text span { color: var(--blue); }
+    nav { display: flex; align-items: center; gap: 24px; }
+    nav a { color: var(--gray-3); text-decoration: none; font-size: 14px; font-weight: 500; }
+    nav a:hover { color: var(--white); }
+    .btn-nav { background: var(--blue); color: var(--white); padding: 10px 20px; border-radius: 8px; font-weight: 600; }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      background: linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 { font-family: 'Sora', sans-serif; font-size: 38px; font-weight: 800; margin-bottom: 12px; }
+    .hero p { color: var(--gray-4); font-size: 16px; }
+
+    /* ================= CONTENT ================= */
+    .container {
+      max-width: 900px;
+      margin: -40px auto 100px;
+      padding: 0 20px;
+    }
+
+    .legal-card {
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .legal-card h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--gray-1);
+      padding-bottom: 12px;
+    }
+
+    .legal-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 28px 0 12px;
+    }
+
+    .legal-card p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .bullet-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      background: var(--gray-1);
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--gray-2);
+    }
+
+    .bullet-row i {
+      color: var(--blue);
+      font-size: 18px;
+      margin-top: 2px;
+    }
+
+    .bullet-text strong {
+      display: block;
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      font-size: 14.5px;
+      margin-bottom: 4px;
+    }
+
+    .bullet-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    /* ================= FOOTER ================= */
+    .footer { background: var(--night); color: var(--white); padding: 80px 40px 30px; }
+    .footer-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
+    .footer-brand { max-width: 320px; }
+    .logo-footer { height: 44px; margin-bottom: 16px; }
+    .footer-brand h2 span { color: var(--blue); }
+    .footer-brand p { font-size: 13.5px; color: var(--gray-4); }
+    .footer-col { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col h3 { font-family: 'Sora', sans-serif; font-size: 15px; color: var(--white); margin-bottom: 8px; }
+    .footer-col a { color: var(--gray-4); text-decoration: none; font-size: 14px; }
+    .footer-col a:hover { color: var(--blue); }
+    .redes { display: flex; gap: 12px; margin-top: 14px; }
+    .icone { font-size: 18px; color: var(--gray-3); background: rgba(255, 255, 255, 0.05); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.06); margin-top: 60px; padding-top: 24px; text-align: center; font-size: 13px; color: var(--gray-4); }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="Index.html" class="logo-wrap">
+        <img src="Logo.jpeg" alt="Logo SismoAlerta" class="logo-img">
+        <span class="logo-text">Sismo<span>Alerta</span></span>
+      </a>
+      <nav>
+        <a href="Index.html">Início</a>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Como-Funciona.html">Como funciona</a>
+        <a href="Especificações.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+        <a href="Criar-Conta.html">Junte-se a nós</a>
+        <a href="Entrar-Conta.html">Entrar</a>
+        <a href="Preço.html" class="btn-nav">Comprar</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>Segurança de Dados</h1>
+    <p>Conheça os métodos e a infraestrutura crítica voltada para proteger seus perímetros.</p>
+  </div>
+
+  <div class="container">
+    <div class="legal-card">
+      <h2>Diretrizes e Protocolos de Proteção</h2>
+      <p>A arquitetura cibernética desenvolvida pela equipe do SismoAlerta visa blindar e encriptar todos os pacotes de monitoramento gerados nos lotes.</p>
+      
+      <div class="bullet-row">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div class="bullet-text">
+          <strong>Criptografia Avançada em Trânsito</strong>
+          <p>Toda comunicação estruturada emitida pelos sensores terrestres TerraScan para as centrais em nuvem utiliza protocolos criptografados ponta a ponta de alta segurança.</p>
+        </div>
+      </div>
+
+      <div class="bullet-row">
+        <i class="fa-solid fa-server"></i>
+        <div class="bullet-text">
+          <strong>Redundância Crítica de Servidores</strong>
+          <p>A nossa infraestrutura mantém redes espelhadas de servidores. Se uma rota cair, os gatilhos emergenciais automatizados de evacuação encontram caminhos secundários em menos de 3 segundos.</p>
+        </div>
+      </div>
+
+      <div class="bullet-row">
+        <i class="fa-solid fa-user-shield"></i>
+        <div class="bullet-text">
+          <strong>Tratamento e Privacidade</strong>
+          <p>Nenhuma métrica ou localização geográfica residencial de clientes cadastrados é vendida ou exportada para terceiros. O fluxo de informações permanece unicamente no painel operacional.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="Logo.jpeg" alt="Logo SismoAlerta" class="logo-footer">
+        <h2>Sismo<span>Alerta</span></h2>
+        <p>Tecnologia inteligente para prevenção de desastres e proteção de vidas.</p>
+        <strong>SismoAlerta@gmail.com</strong>
+        <div class="redes">
+          <a href="https://wa.me/5511986926518" class="icone"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://instagram.com/lima_mkz" class="icone"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Produto</h3><a href="Funcionalidades.html">Funcionalidades</a><a href="Como-Funciona.html">Como funciona</a><a href="Preço.html">Preços</a>
+      </div>
+      <div class="footer-col">
+        <h3>Empresa</h3><a href="sobre.html">Missão</a><a href="sobre.html">Valores</a><a href="gerencie-sua-conta.html">Gerencie sua conta</a>
+      </div>
+      <div class="footer-col">
+        <h3>Suporte</h3><a href="ajuda-termos-privacidade.html">Ajuda</a><a href="termos.html">Termos</a><a href="seguranca.html">Segurança</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 SismoAlerta. Todos os direitos reservados.</div>
+  </footer>
+
+</body>
+</html>

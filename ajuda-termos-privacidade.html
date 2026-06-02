@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <title>Central de Ajuda e Diretrizes — SismoAlerta</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+    :root {
+      --blue: #3b6bff;
+      --blue-light: #eef2ff;
+      --blue-dark: #1a3db5;
+      --night: #080b14;
+      --night-2: #0e1220;
+      --white: #ffffff;
+      --gray-1: #f7f8fc;
+      --gray-2: #e8ebf4;
+      --gray-3: #c4c9dc;
+      --gray-4: #8890aa;
+      --text: #0f1523;
+      --text-muted: #6b7390;
+      --success: #10b981;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.06);
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      background: var(--night);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: auto;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text span {
+      color: var(--blue);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      color: var(--gray-3);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    .btn-nav {
+      background: var(--blue);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .btn-nav:hover {
+      background: var(--blue-dark);
+    }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      background: linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 80px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59,107,255,0.15) 0%, rgba(0,0,0,0) 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--gray-4);
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ================= CORE CONTAINER & GRID ================= */
+    .container {
+      max-width: 1200px;
+      margin: -40px auto 80px;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 32px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-2);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .card h2 .material-symbols-outlined {
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      font-size: 24px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ================= LAW & LEGAL COLUMN ================= */
+    .legal-column {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .legal-bullet {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .legal-bullet i {
+      color: var(--blue);
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    /* ================= FAQ ACCORDION ================= */
+    .faq-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--gray-2);
+      background: var(--gray-1);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-question {
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      user-select: none;
+      gap: 16px;
+    }
+
+    .faq-question .material-symbols-outlined {
+      color: var(--gray-4);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0, 1, 0, 1);
+      padding: 0 24px;
+      font-size: 14.5px;
+      color: var(--text-muted);
+    }
+
+    /* Classes Ativas via JS */
+    .faq-item.active {
+      background: var(--white);
+      border-color: var(--blue);
+      box-shadow: 0 4px 12px rgba(59, 107, 255, 0.05);
+    }
+
+    .faq-item.active .faq-question .material-symbols-outlined {
+      transform: rotate(180deg);
+      color: var(--blue);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding-bottom: 20px;
+      transition: all 0.3s cubic-bezier(1, 0, 1, 0);
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      background: var(--night);
+      color: var(--white);
+      padding: 80px 40px 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .footer-brand {
+      max-width: 320px;
+    }
+
+    .logo-footer {
+      height: 44px;
+      width: auto;
+      margin-bottom: 16px;
+      object-fit: contain;
+    }
+
+    .footer-brand h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand h2 span {
+      color: var(--blue);
+    }
+
+    .footer-brand p {
+      font-size: 13.5px;
+      color: var(--gray-4);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .footer-brand strong {
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    .footer-col a {
+      color: var(--gray-4);
+      text-decoration: none;
+      font-size: 14px;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-col a:hover {
+      color: var(--blue);
+      transform: translateX(4px);
+    }
+
+    .redes {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .icone {
+      font-size: 18px;
+      color: var(--gray-3);
+      background: rgba(255, 255, 255, 0.05);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .icone:hover {
+      background: var(--blue);
+      color: var(--white);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 60px auto 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-4);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 992px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+      }
+      .header-inner { padding: 0 20px; }
+      nav { display: none; } /* Ideal criar menu futuramente */
+      .hero h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="Index.html" class="logo-wrap">
+        <img src="imagens/logo2.png" alt="Logo SismoAlerta" class="logo-img">
+        <span class="logo-text">Sismo<span>Alerta</span></span>
+      </a>
+      <nav>
+        <a href="Index.html">Início</a>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Especificações.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+        <a href="Entrar-Conta.html">Entrar</a>
+        <a href="Preço.html" class="btn-nav">Comprar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Central de Ajuda</h1>
+    <p>Suporte técnico, transparência jurídica e termos de privacidade reunidos em um único canal transparente.</p>
+  </div>
+
+  <!-- CONTAINER CORE -->
+  <div class="container">
+
+    <!-- AJUDA (FAQ) -->
+    <div class="card">
+      <h2>
+        <span class="material-symbols-outlined">help</span>
+        Perguntas Frequentes (FAQ)
+      </h2>
+
+      <div class="faq-wrapper">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            Como funciona o ecossistema TerraScan?
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+          <div class="faq-answer">
+            O hardware analítico TerraScan monitora as camadas superficiais e profundas do solo em tempo real. Ele combina a leitura contínua de microssismos, vibrações estruturais e níveis de umidade crítica para calcular a estabilidade do terreno e mitigar deslizamentos.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            Quais são as formas de pagamento disponíveis?
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+          <div class="faq-answer">
+            Oferecemos total flexibilidade de pagamento. Processamos suas transações de forma 100% criptografada via Pix com confirmação instantânea, Cartões de Crédito, Débito Online ou Boleto Bancário.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            É possível efetuar o parcelamento da aquisição?
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+          <div class="faq-answer">
+            Com certeza! O parcelamento está disponível para todas as compras por cartão de crédito. Você pode selecionar as parcelas ideais direto no checkout da sua página de contratação residencial ou comercial.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA: DIREITOS E PRIVACIDADE -->
+    <div class="legal-column">
+      
+      <!-- TERMOS DE USO -->
+      <div class="card">
+        <h2>
+          <span class="material-symbols-outlined">description</span>
+          Termos de Uso
+        </h2>
+        <p>Ao interagir com o nosso ecossistema e utilizar nossos dispositivos analíticos, você aceita integralmente as diretrizes corporativas contidas em nosso contrato.</p>
+        
+        <div class="legal-bullet">
+          <i class="fa-solid fa-chevron-right"></i>
+          <p>O SismoAlerta atua como uma ferramenta tecnológica auxiliar e preventiva de apoio inteligente; ela não anula ou substitui os planos de contingência e monitoramento de órgãos públicos oficiais (como a Defesa Civil).</p>
+        </div>
+        <div class="legal-bullet">
+          <i class="fa-solid fa-chevron-right"></i>
+          <p>Reservamo-nos o direito de otimizar e readequar estes termos juridicamente a qualquer período para acompanhar evoluções tecnológicas ou legais.</p>
+        </div>
+      </div>
+
+      <!-- POLÍTICA DE PRIVACIDADE -->
+      <div class="card">
+        <h2>
+          <span class="material-symbols-outlined">lock</span>
+          Política de Privacidade
+        </h2>
+        <p>Garantir o sigilo absoluto das suas informações residenciais e métricas coletadas pelos sensores geológicos é o pilar central da nossa infraestrutura.</p>
+        
+        <div class="legal-bullet">
+          <i class="fa-solid fa-shield-halved"></i>
+          <p>Seus dados cadastrais e de localização são protegidos por criptografia de ponta a ponta e manipulados unicamente para otimizar os disparos dos alertas automatizados.</p>
+        </div>
+        <div class="legal-bullet">
+          <i class="fa-solid fa-user-check"></i>
+          <p>Não compartilhamos, vendemos ou expomos quaisquer informações sem o consentimento prévio ou exigência legal expressa.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- MARCA -->
+      <div class="footer-brand">
+        <img src="imagens/logo2.png" alt="Logo SismoAlerta" class="logo-footer">
+        <h2>Sismo<span>Alerta</span></h2>
+        <p>Desenvolvendo hardware avançado e engenharia de software inteligente para a prevenção ativa de deslizamentos de terra e proteção de vidas.</p>
+        <strong>SismoAlerta@gmail.com</strong>
+
+        <div class="redes">
+          <a href="https://wa.me/5511986926518" class="icone"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://instagram.com/lima_mkz" class="icone"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@lima_mkz" target="_blank" class="icone"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <!-- PRODUTO -->
+      <div class="footer-col">
+        <h3>Produto</h3>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Como-Funciona.html">Como funciona</a>
+        <a href="Especificacoes.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+      </div>
+
+      <!-- EMPRESA -->
+      <div class="footer-col">
+        <h3>Empresa</h3>
+        <a href="sobre.html#missao">Missão</a>
+        <a href="sobre.html#visao">Visão</a>
+        <a href="sobre.html#valores">Valores</a>
+        <a href="gerencie-sua-conta.html">Gerencie sua conta</a>
+      </div>
+
+      <!-- SUPORTE -->
+      <div class="footer-col">
+        <h3>Suporte</h3>
+        <a href="https://wa.me/5511986926518">Contato</a>
+        <a href="ajuda-termos-privacidade.html">Ajuda</a>
+        <a href="ajuda-termos-privacidade.html">Termos</a>
+        <a href="ajuda-termos-privacidade.html">Privacidade</a>
+      </div>
+
+    </div>
+
+    <!-- DIREITOS -->
+    <div class="footer-bottom">
+      © 2026 SismoAlerta. Todos os direitos reservados. Tecnologia voltada para a prevenção e monitoramento de solo.
+    </div>
+  </footer>
+
+  <!-- SCRIPT FAQ ANIMADO -->
+  <script>
+    function toggleFAQ(element) {
+      const currentItem = element.parentElement;
+      const allItems = document.querySelectorAll('.faq-item');
+
+      // Fecha outros itens abertos (Efeito Sanfona Limpo)
+      allItems.forEach(item => {
+        if (item !== currentItem) {
+          item.classList.remove('active');
+        }
+      });
+
+      // Alterna o item atual
+      currentItem.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>

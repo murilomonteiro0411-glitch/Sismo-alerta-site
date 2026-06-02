@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="Index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>SismoAlerta — Detecção Inteligente de Deslizamentos</title>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="Index.html" class="logo-wrap">
+        <div class="logo-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <span class="logo-text">Sismo<strong>Alerta</strong></span>
+      </a>
+
+      <nav>
+        <a href="Funcionalidades.html">Funcionalidades</a>
+        <a href="Especificacoes.html">Especificações</a>
+        <a href="Preço.html">Preços</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="Entrar-Conta.html" class="btn-ghost">Entrar</a>
+        <a href="Preço.html" class="btn-cta">Adquirir dispositivo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-inner">
+
+        <div class="hero-left">
+          <div class="hero-tag">
+            <span class="tag-dot"></span>
+            Monitoramento ativo 24/7
+          </div>
+
+          <h1>
+            Proteção inteligente<br>
+            contra <em>deslizamentos</em><br>
+            de terra
+          </h1>
+
+          <p class="hero-desc">
+            Sensores de precisão combinados com inteligência artificial 
+            para identificar riscos com antecedência — alertando comunidades 
+            antes que o perigo se instale.
+          </p>
+
+          <div class="hero-actions">
+            <a href="Preço.html" class="btn-hero-primary">
+              Adquirir dispositivo
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="Como-Funciona.html" class="btn-hero-secondary">
+              Como funciona
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <span class="trust-item">
+              <i class="fa-solid fa-check-circle"></i>
+              Certificação INMET
+            </span>
+            <span class="trust-sep">·</span>
+            <span class="trust-item">
+              <i class="fa-solid fa-check-circle"></i>
+              Compatível com Defesa Civil
+            </span>
+            <span class="trust-sep">·</span>
+            <span class="trust-item">
+              <i class="fa-solid fa-check-circle"></i>
+              Garantia de 3 anos
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="device-card">
+            <div class="device-card-header">
+              <span class="device-status-dot"></span>
+              <span class="device-status-text">Sistema ativo — sem alertas</span>
+              <span class="device-time">Agora</span>
+            </div>
+            <div class="device-metrics">
+              <div class="metric-row">
+                <div class="metric-label">
+                  <i class="fa-solid fa-droplet"></i>
+                  Umidade do Solo
+                </div>
+                <div class="metric-bar-wrap">
+                  <div class="metric-bar">
+                    <div class="metric-fill metric-fill--safe" style="width: 38%"></div>
+                  </div>
+                  <span class="metric-val">38%</span>
+                </div>
+              </div>
+              <div class="metric-row">
+                <div class="metric-label">
+                  <i class="fa-solid fa-wave-square"></i>
+                  Vibração (mm/s²)
+                </div>
+                <div class="metric-bar-wrap">
+                  <div class="metric-bar">
+                    <div class="metric-fill metric-fill--safe" style="width: 12%"></div>
+                  </div>
+                  <span class="metric-val">0.12</span>
+                </div>
+              </div>
+              <div class="metric-row">
+                <div class="metric-label">
+                  <i class="fa-solid fa-cloud-rain"></i>
+                  Precipitação
+                </div>
+                <div class="metric-bar-wrap">
+                  <div class="metric-bar">
+                    <div class="metric-fill metric-fill--warn" style="width: 61%"></div>
+                  </div>
+                  <span class="metric-val">61 mm</span>
+                </div>
+              </div>
+            </div>
+            <div class="device-footer">
+              <div class="device-footer-stat">
+                <span class="dfs-label">Último alerta</span>
+                <span class="dfs-val">Nenhum</span>
+              </div>
+              <div class="device-footer-stat">
+                <span class="dfs-label">Uptime</span>
+                <span class="dfs-val">99.8%</span>
+              </div>
+              <div class="device-footer-stat">
+                <span class="dfs-label">Sinal LoRa</span>
+                <span class="dfs-val">Excelente</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat-item">
+          <div class="stat-number">99<span class="stat-sup">.7%</span></div>
+          <div class="stat-desc">Precisão de detecção</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">&lt;<span class="stat-sup">3s</span></div>
+          <div class="stat-desc">Tempo de alerta</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">5<span class="stat-sup">km</span></div>
+          <div class="stat-desc">Alcance do sinal</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">72<span class="stat-sup">h+</span></div>
+          <div class="stat-desc">Bateria de backup</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Funcionalidades</div>
+          <h2>Tecnologia desenvolvida para <em>situações críticas</em></h2>
+          <p>Cada componente foi projetado com redundância e confiabilidade máximas, para garantir proteção mesmo nas condições mais adversas.</p>
+        </div>
+
+        <div class="features-grid">
+
+          <div class="feature-card feature-card--large">
+            <div class="fc-icon">
+              <i class="fa-solid fa-droplet"></i>
+            </div>
+            <h3>Sensor de Umidade de Alta Precisão</h3>
+            <p>Detecta a saturação do solo em tempo real com resolução de 0,1%, identificando condições propícias a deslizamentos com horas de antecedência antes de qualquer movimento visível.</p>
+            <div class="fc-specs">
+              <span>Resolução 0,1%</span>
+              <span>Profundidade até 60cm</span>
+              <span>IP68</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="fc-icon">
+              <i class="fa-solid fa-wave-square"></i>
+            </div>
+            <h3>Sensor de Vibração</h3>
+            <p>Microacelerômetros MEMS capturam movimentações mínimas do terreno, detectando padrões sísmicos antes que se tornem críticos.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="fc-icon">
+              <i class="fa-solid fa-satellite-dish"></i>
+            </div>
+            <h3>Rede LoRa 5km</h3>
+            <p>Conectividade de longo alcance sem necessidade de infraestrutura de rede — funciona em áreas remotas e durante quedas de energia.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="fc-icon">
+              <i class="fa-solid fa-solar-panel"></i>
+            </div>
+            <h3>Energia Autônoma</h3>
+            <p>Painel solar integrado com bateria de 72h de backup. Operação ininterrupta mesmo em tempestades prolongadas e dias nublados.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="fc-icon">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <h3>Alertas Multi-Canal</h3>
+            <p>Notificações simultâneas via app, SMS, e-mail e sirene local em menos de 3 segundos após a detecção de risco.</p>
+          </div>
+
+          <div class="feature-card feature-card--accent">
+            <div class="fc-icon">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <h3>IA Preditiva</h3>
+            <p>Algoritmos de machine learning analisam padrões históricos e em tempo real para reduzir falsos alertas e antecipar riscos emergentes.</p>
+            <div class="fc-badge">Tecnologia exclusiva</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section">
+      <div class="container">
+        <div class="section-header section-header--centered">
+          <div class="section-tag">Processo</div>
+          <h2>Da leitura do solo ao <em>alerta em segundos</em></h2>
+          <p>Um fluxo contínuo e automatizado que protege comunidades sem depender de intervenção humana.</p>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-number">01</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-icon-wrap">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <div class="step-text">
+                <h3>Sensores Capturam</h3>
+                <p>Os sensores de umidade e vibração instalados no solo realizam leituras contínuas a cada 10 segundos, transmitindo dados brutos ao processador embarcado.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-number">02</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-icon-wrap">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div class="step-text">
+                <h3>IA Analisa em Tempo Real</h3>
+                <p>O modelo de IA compara as leituras atuais com padrões históricos de risco, calculando um índice de perigo em tempo real e classificando o nível de alerta.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-number">03</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-icon-wrap">
+                <i class="fa-solid fa-tower-broadcast"></i>
+              </div>
+              <div class="step-text">
+                <h3>Transmissão LoRa</h3>
+                <p>Em caso de alerta, o sinal viaja pela rede LoRa até 5 km — atingindo a central de controle e os dispositivos cadastrados sem depender de internet ou celular.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-left">
+              <div class="step-number">04</div>
+            </div>
+            <div class="step-body">
+              <div class="step-icon-wrap">
+                <i class="fa-solid fa-mobile-screen"></i>
+              </div>
+              <div class="step-text">
+                <h3>Alerta Imediato</h3>
+                <p>Em menos de 3 segundos, moradores, gestores e Defesa Civil recebem notificação push, SMS e a sirene local é acionada — tempo suficiente para uma evacuação segura.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="trust-section">
+      <div class="container">
+        <div class="trust-grid">
+          <div class="trust-text">
+            <div class="section-tag">Confiabilidade</div>
+            <h2>Construído para os <em>ambientes mais exigentes</em></h2>
+            <p>O SismoAlerta foi testado em condições extremas em parceria com órgãos públicos de defesa civil, universidades de engenharia e comunidades em zonas de risco real.</p>
+            <ul class="trust-list">
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                Testado em mais de 40 municípios de alto risco no Brasil
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                Resistência a chuvas de até 200mm/h e temperaturas de -5°C a 60°C
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                Compatível com o sistema de alertas da Defesa Civil Nacional
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i>
+                Certificação IP67 para imersão e proteção contra poeira
+              </li>
+            </ul>
+            <a href="Especificacoes.html" class="btn-outline-green">
+              Ver especificações técnicas completas
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="trust-certs">
+            <div class="cert-card">
+              <div class="cert-icon"><i class="fa-solid fa-award"></i></div>
+              <div class="cert-title">INMET</div>
+              <div class="cert-desc">Certificação meteorológica nacional</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="cert-title">IP67</div>
+              <div class="cert-desc">Proteção total contra água e poeira</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon"><i class="fa-solid fa-leaf"></i></div>
+              <div class="cert-title">Solar Ready</div>
+              <div class="cert-desc">Operação off-grid certificada</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+              <div class="cert-title">LoRaWAN</div>
+              <div class="cert-desc">Protocolo industrial certificado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-inner">
+          <div class="cta-text">
+            <h2>Pronto para proteger sua comunidade?</h2>
+            <p>Fale com nossa equipe técnica e descubra a melhor configuração para sua área de risco.</p>
+          </div>
+          <div class="cta-actions">
+            <a href="Preço.html" class="btn-cta-white">Ver planos e preços</a>
+            <a href="https://wa.me/5511986926518" class="btn-cta-ghost">
+              <i class="fa-brands fa-whatsapp"></i>
+              Falar com especialista
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="Index.html" class="logo-wrap">
+            <div class="logo-icon logo-icon--sm">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <span class="logo-text">Sismo<strong>Alerta</strong></span>
+          </a>
+          <p>Tecnologia inteligente para prevenção de desastres e proteção de vidas em comunidades de risco.</p>
+          <a href="mailto:contato@sismoalerta.com.br" class="footer-email">
+            <i class="fa-regular fa-envelope"></i>
+            contato@sismoalerta.com.br
+          </a>
+          <div class="socials">
+            <a href="https://wa.me/5511986926518" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://instagram.com/sismoalerta" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/sismoalerta" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://twitter.com/sismoalerta" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Produto</h4>
+          <a href="Funcionalidades.html">Funcionalidades</a>
+          <a href="Especificacoes.html">Especificações técnicas</a>
+          <a href="Preço.html">Planos e preços</a>
+          <a href="Criar-Conta.html">Criar conta</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="sobre.html">Sobre nós</a>
+          <a href="sobre.html#missao">Missão e visão</a>
+          <a href="gerencie-sua-conta.html">Minha conta</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Suporte</h4>
+          <a href="https://wa.me/5511986926518">Fale conosco</a>
+          <a href="ajuda-termos-privacidade.html">Central de ajuda</a>
+          <a href="ajuda-termos-privacidade.html">Termos e privacidade</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 SismoAlerta. Todos os direitos reservados.</p>
+        <div class="footer-links">
+          <a href="ajuda-termos-privacidade.html">Termos</a>
+          <a href="ajuda-termos-privacidade.html">Privacidade</a>
+          <a href="https://wa.me/5511986926518">Contato</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

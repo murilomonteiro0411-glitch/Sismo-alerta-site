@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Boleto Bancário</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    padding: 40px;
+}
+
+.boleto {
+    background: white;
+    max-width: 900px;
+    margin: auto;
+    padding: 25px;
+    border: 1px solid #000;
+}
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+}
+
+.topo h2 {
+    font-size: 20px;
+}
+
+.linha {
+    display: flex;
+    border-bottom: 1px solid #000;
+}
+
+.campo {
+    padding: 8px;
+    font-size: 13px;
+    border-right: 1px solid #000;
+    flex: 1;
+}
+
+.campo:last-child {
+    border-right: none;
+}
+
+.destaque {
+    font-weight: bold;
+}
+
+.valor {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.codigo {
+    text-align: center;
+    font-size: 18px;
+    margin: 15px 0;
+    letter-spacing: 2px;
+}
+
+.barras {
+    margin-top: 30px;
+    height: 80px;
+    background: repeating-linear-gradient(
+        to right,
+        #000 0px,
+        #000 2px,
+        #fff 2px,
+        #fff 4px
+    );
+}
+
+.voltar {
+    display: inline-block;
+    margin-top: 25px;
+    background: #4f7cff;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.voltar:hover {
+    background: #3c63d6;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="boleto">
+
+    <div class="topo">
+        <h2>SismoAlerta</h2>
+        <div class="codigo">
+            23793.38128 60007.123456 78901.000000 1 99990000000000
+        </div>
+    </div>
+
+    <div class="linha">
+        <div class="campo">
+            <span class="destaque">Beneficiário:</span><br>
+            SismoAlerta Tecnologia
+        </div>
+
+        <div class="campo">
+            <span class="destaque">CNPJ:</span><br>
+            00.000.000/0001-00
+        </div>
+
+        <div class="campo">
+            <span class="destaque">Vencimento:</span><br>
+            <span id="vencimento"></span>
+        </div>
+    </div>
+
+    <div class="linha">
+        <div class="campo">
+            <span class="destaque">Pagador:</span><br>
+            <span id="nome"></span>
+        </div>
+
+        <div class="campo">
+            <span class="destaque">CPF:</span><br>
+            <span id="cpf"></span>
+        </div>
+
+        <div class="campo valor">
+            <span id="valor-boleto"></span>
+        </div>
+    </div>
+
+    <div class="linha">
+        <div class="campo" style="flex:2">
+            <span class="destaque">Endereço:</span><br>
+            <span id="endereco"></span>
+        </div>
+
+        <div class="campo">
+            <span class="destaque">Nosso Número:</span><br>
+            123456789
+        </div>
+    </div>
+
+    <div class="linha">
+        <div class="campo" style="flex:1">
+            <span class="destaque">Instruções:</span><br>
+            - Não receber após o vencimento<br>
+            - Multa de 2% após vencimento
+        </div>
+    </div>
+
+    <div class="barras"></div>
+
+</div>
+
+<div style="text-align:center;">
+    <a href="Página-de-Compra-Municipal.html" class="voltar">Voltar</a>
+</div>
+
+<script>
+  document.getElementById("valor-boleto").innerText =
+    localStorage.getItem("valorTotal") || "R$ 0,00";
+
+  document.getElementById("nome").innerText =
+    localStorage.getItem("nomeCliente") || "-";
+
+  document.getElementById("cpf").innerText =
+    localStorage.getItem("cpfCliente") || "-";
+
+  let endereco = `
+    ${localStorage.getItem("enderecoCliente") || ""}, 
+    ${localStorage.getItem("numeroCliente") || ""} - 
+    ${localStorage.getItem("bairroCliente") || ""}<br>
+    ${localStorage.getItem("cidadeCliente") || ""} - 
+    ${localStorage.getItem("estadoCliente") || ""}<br>
+    CEP: ${localStorage.getItem("cepCliente") || ""}
+  `;
+
+  document.getElementById("endereco").innerHTML = endereco;
+
+  let hoje = new Date();
+  hoje.setDate(hoje.getDate() + 3);
+
+  document.getElementById("vencimento").innerText =
+    hoje.toLocaleDateString("pt-BR");
+</script>
+
+</body>
+</html>

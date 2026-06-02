@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>SismoAlerta — Painel do Pedido</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+    :root {
+      --blue: #3b6bff;
+      --blue-light: #eef2ff;
+      --blue-dark: #1a3db5;
+      --night: #080b14;
+      --night-2: #0e1220;
+      --white: #ffffff;
+      --gray-1: #f7f8fc;
+      --gray-2: #e8ebf4;
+      --gray-3: #c4c9dc;
+      --gray-4: #8890aa;
+      --text: #0f1523;
+      --text-muted: #6b7390;
+      --success: #10b981;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background: var(--night);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 200px;
+      height: 50px;
+      object-fit: cover;
+    }
+
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text span {
+      color: var(--blue);
+    }
+
+    .user-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--white);
+      font-size: 14px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 40px;
+      flex: 1;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    .panel-header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .order-meta {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .badge-status {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 32px;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .card-title i {
+      color: var(--blue);
+    }
+
+    .tracking-timeline {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 20px 0 10px;
+      padding-bottom: 20px;
+    }
+
+    .tracking-timeline::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      right: 40px;
+      height: 4px;
+      background: var(--gray-2);
+      z-index: 1;
+    }
+
+    .tracking-timeline-progress {
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      width: 35%;
+      height: 4px;
+      background: var(--blue);
+      z-index: 1;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+
+    .step-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--gray-3);
+      color: var(--gray-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .step.completed .step-icon {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .step.active .step-icon {
+      border-color: var(--blue);
+      background: var(--white);
+      color: var(--blue);
+      box-shadow: 0 0 0 5px rgba(59, 107, 255, 0.15);
+    }
+
+    .step-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .step.active .step-label, .step.completed .step-label {
+      color: var(--text);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .info-group h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-4);
+      margin-bottom: 6px;
+    }
+
+    .info-group p {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .info-group .date-highlight {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--blue);
+      font-family: 'Sora', sans-serif;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .item-prod {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gray-2);
+      margin-bottom: 20px;
+    }
+
+    .item-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--blue-light);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 20px;
+    }
+
+    .item-details h4 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .item-details p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .price-row.total {
+      border-top: 1px dashed var(--gray-3);
+      padding-top: 14px;
+      margin-top: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .price-row.total span:last-child {
+      color: var(--blue);
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+    }
+
+    .btn-support {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 48px;
+      background: var(--night);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .btn-support:hover {
+      background: var(--blue);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 992px) {
+      .panel-grid { grid-template-columns: 1fr; }
+      .container { padding: 32px 20px; }
+      .tracking-timeline::before, .tracking-timeline-progress { display: none; }
+      .tracking-timeline { flex-direction: column; gap: 20px; align-items: flex-start; }
+      .step { display: flex; gap: 16px; text-align: left; }
+      .step-icon { margin: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="Index.html" class="logo-wrap">
+        <img src="imagens/logo2.png" alt="SismoAlerta" class="logo-img">
+        <span class="logo-text">Sismo<span>Alerta</span></span>
+      </a>
+      <div class="user-nav">
+        <span id="nomeUserTop">Olá, Cliente</span>
+        <div class="user-avatar" id="avatarLetra">C</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="panel-header">
+      <div>
+        <h1>Acompanhar Pedido</h1>
+        <p class="order-meta">Pedido número: <strong id="outPedido">#000000</strong> • Método: Pix</p>
+      </div>
+      <div class="badge-status">
+        <i class="fa-solid fa-circle-check"></i> Pagamento Confirmado
+      </div>
+    </div>
+
+    <div class="panel-grid">
+      <div class="main-content">
+        
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-truck-ramp-box"></i> Status de Envio do Equipamento
+          </div>
+          <div class="tracking-timeline">
+            <div class="tracking-timeline-progress"></div>
+            <div class="step completed">
+              <div class="step-icon"><i class="fa-solid fa-wallet"></i></div>
+              <div class="step-label">Pago</div>
+            </div>
+            <div class="step active">
+              <div class="step-icon"><i class="fa-solid fa-gears"></i></div>
+              <div class="step-label">Preparando Envio</div>
+            </div>
+            <div class="step">
+              <div class="step-icon"><i class="fa-solid fa-truck"></i></div>
+              <div class="step-label">A caminho</div>
+            </div>
+            <div class="step">
+              <div class="step-icon"><i class="fa-solid fa-house-signal"></i></div>
+              <div class="step-label">Entregue</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-location-dot"></i> Logística e Entrega
+          </div>
+          <div class="info-grid">
+            <div class="info-group">
+              <h4>Previsão de Entrega</h4>
+              <p class="date-highlight" id="dataEntrega">Carregando previsão...</p>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Envio Expresso via Transportadora</p>
+            </div>
+            <div class="info-group">
+              <h4>Endereço do Destinatário</h4>
+              <p id="outEndereco">Carregando endereço completo...</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sidebar">
+        <div class="card">
+          <div class="card-title">
+            <i class="fa-solid fa-receipt"></i> Itens Comprados
+          </div>
+          <div class="item-prod">
+            <div class="item-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+            <div class="item-details">
+              <h4>Sensor TerraScan</h4>
+              <p>Qtd: <span id="outQtd">1</span></p>
+            </div>
+          </div>
+          <div class="price-row">
+            <span>Subtotal</span>
+            <span id="subtotal">R$ 0,00</span>
+          </div>
+          <div class="price-row">
+            <span>Frete</span>
+            <span style="color: var(--success); font-weight: 600;">Grátis</span>
+          </div>
+          <div class="price-row total">
+            <span>Total Pago</span>
+            <span id="outTotal">R$ 0,00</span>
+          </div>
+        </div>
+
+        <a href="https://wa.me/5511986926518" target="_blank" class="btn-support">
+          <i class="fa-brands fa-whatsapp"></i> Precisa de ajuda? Fale conosco
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const numPedido = localStorage.getItem("numeroPedido") || "59821";
+    const quantidade = localStorage.getItem("quantidade") || "1";
+    const valorTotal = localStorage.getItem("valorTotal") || "R$ 1.290,00";
+    const nomeCliente = localStorage.getItem("nomeCliente") || "Cliente";
+
+    const rua = localStorage.getItem("enderecoCliente");
+    const num = localStorage.getItem("numeroCliente");
+    const bairro = localStorage.getItem("bairroCliente");
+    const cidade = localStorage.getItem("cidadeCliente");
+    const estado = localStorage.getItem("estadoCliente");
+    const cep = localStorage.getItem("cepCliente");
+
+    let enderecoCompleto = "Endereço de instalação não especificado.";
+    if(rua && num) {
+      enderecoCompleto = `${rua}, Nº ${num}<br>${bairro}<br>${cidade} — ${estado}<br>CEP: ${cep}`;
+    }
+
+    document.getElementById("outPedido").innerText = "#" + numPedido;
+    document.getElementById("outQtd").innerText = quantidade;
+    document.getElementById("subtotal").innerText = valorTotal;
+    document.getElementById("outTotal").innerText = valorTotal;
+    document.getElementById("outEndereco").innerHTML = enderecoCompleto;
+    document.getElementById("nomeUserTop").innerText = "Olá, " + nomeCliente.split(" ")[0];
+    document.getElementById("avatarLetra").innerText = nomeCliente.charAt(0).toUpperCase();
+
+    const dataAtual = new Date();
+    dataAtual.setDate(dataAtual.getDate() + 10);
+    document.getElementById("dataEntrega").innerText = dataAtual.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+  </script>
+
+</body>
+</html>

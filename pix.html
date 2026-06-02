@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>SismoAlerta — Pagamento Pix</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+    :root {
+      --blue: #3b6bff;
+      --blue-light: #eef2ff;
+      --blue-dark: #1a3db5;
+      --night: #080b14;
+      --night-2: #0e1220;
+      --white: #ffffff;
+      --gray-1: #f7f8fc;
+      --gray-2: #e8ebf4;
+      --gray-3: #c4c9dc;
+      --gray-4: #8890aa;
+      --text: #0f1523;
+      --text-muted: #6b7390;
+      --success: #10b981;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .box {
+      background: var(--white);
+      padding: 40px 32px;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      border: 1px solid var(--gray-2);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 107, 255, 0.1);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .status-badge.sucesso {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .status-badge i.fa-spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100 { transform: rotate(360deg); }
+    }
+
+    .qr-wrap {
+      background: var(--gray-1);
+      border: 1px solid var(--gray-2);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .qr-wrap img {
+      display: block;
+      max-width: 180px;
+      height: auto;
+    }
+
+    .chave-container {
+      width: 100%;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .chave-container label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-3);
+      background: var(--gray-1);
+      padding: 0 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .btn-copiar {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 0 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 16px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-copiar:hover {
+      background: var(--blue-dark);
+    }
+
+    .feedback-mensagem {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--success);
+      margin-top: 6px;
+      min-height: 18px;
+      text-align: left;
+    }
+
+    .resumo-card {
+      background: var(--gray-1);
+      border: 1px solid var(--gray-2);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: left;
+      margin-bottom: 24px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .resumo-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .resumo-line:last-child {
+      margin-bottom: 0;
+      padding-top: 8px;
+      border-top: 1px dashed var(--gray-3);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .resumo-line span:first-child {
+      color: var(--text-muted);
+    }
+
+    .btn-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 46px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .btn-verify {
+      background: var(--night);
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .btn-verify:hover {
+      background: var(--blue-dark);
+    }
+
+    .btn-back {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--gray-3);
+    }
+
+    .btn-back:hover {
+      border-color: var(--text);
+      color: var(--text);
+      background: var(--gray-1);
+    }
+
+    .btn-success-panel {
+      background: var(--success);
+      color: var(--white);
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .btn-success-panel:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h2>Pagamento via Pix</h2>
+
+    <div class="status-badge" id="statusBadge">
+      <i class="fa-solid fa-spinner"></i>
+      <span id="statusTexto">Aguardando pagamento...</span>
+    </div>
+
+    <div class="qr-wrap">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SISMOALERTA_PREVENCAO_DESLIZAMENTOS" alt="QR Code Pix SismoAlerta">
+    </div>
+
+    <div class="chave-container">
+      <label for="chavePix">Copia e Cola / Chave</label>
+      <div class="input-group">
+        <input type="text" id="chavePix" value="sismoalerta@pix.com" readonly>
+        <button class="btn-copiar" onclick="copiarPix()">
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+      <p id="mensagemFeedback" class="feedback-mensagem"></p>
+    </div>
+
+    <div class="resumo-card">
+      <div class="resumo-line">
+        <span>Pedido:</span>
+        <span id="pedido">#00000</span>
+      </div>
+      <div class="resumo-line">
+        <span>Produto:</span>
+        <span>TerraScan</span>
+      </div>
+      <div class="resumo-line">
+        <span>Quantidade:</span>
+        <span id="qtd">0</span>
+      </div>
+      <div class="resumo-line">
+        <span>Total:</span>
+        <span id="total">R$ 0,00</span>
+      </div>
+    </div>
+
+    <button class="btn-action btn-verify" id="btnVerificar" onclick="simularVerificacao()">
+      <i class="fa-solid fa-magnifying-glass"></i> Verificar Pagamento
+    </button>
+
+    <a href="Painel.html" class="btn-action btn-success-panel" id="btnSucesso">
+      <i class="fa-solid fa-circle-check"></i> Ir para o Painel
+    </a>
+
+    <a href="Compra-Residencial.html" class="btn-action btn-back" id="btnVoltar">
+      Voltar para o carrinho
+    </a>
+  </div>
+
+  <script>
+    function copiarPix() {
+      let chave = document.getElementById("chavePix");
+      chave.select();
+      chave.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(chave.value);
+      
+      let feedback = document.getElementById("mensagemFeedback");
+      feedback.innerText = "✅ Código Pix copiado!";
+      setTimeout(() => { feedback.innerText = ""; }, 3000);
+    }
+
+    function simularVerificacao() {
+      let btnVerificar = document.getElementById("btnVerificar");
+      let statusBadge = document.getElementById("statusBadge");
+      let statusTexto = document.getElementById("statusTexto");
+      let btnSucesso = document.getElementById("btnSucesso");
+      let btnVoltar = document.getElementById("btnVoltar");
+
+      btnVerificar.disabled = true;
+      btnVerificar.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verificando...';
+      statusTexto.innerText = "Consultando banco de dados...";
+
+      setTimeout(() => {
+        statusBadge.classList.add("sucesso");
+        statusBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>Pagamento Confirmado!</span>';
+        btnVerificar.style.display = "none";
+        btnVoltar.style.display = "none";
+        btnSucesso.style.display = "flex";
+      }, 2000);
+    }
+
+    // Puxa os dados salvos com a chave correta (valorTotal) vinda do seu checkout
+    document.getElementById("pedido").innerText = "#" + (localStorage.getItem("numeroPedido") || "59821");
+    document.getElementById("qtd").innerText = "x" + (localStorage.getItem("quantidade") || "1");
+    document.getElementById("total").innerText = localStorage.getItem("valorTotal") || "R$ 1.290,00";
+  </script>
+
+</body>
+</html>
