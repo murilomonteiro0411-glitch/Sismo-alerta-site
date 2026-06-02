@@ -7,11 +7,48 @@
   <title>Especificações — SismoAlerta</title>
   <link rel="stylesheet" href="especificacoes.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Estilos injetados para manter a padronização visual do menu do usuário logado */
+    .user-logged-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3b6bff;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-logout {
+      background: #ff3b3b;
+      color: #ffffff !important;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease;
+    }
+    .btn-logout:hover {
+      background: #d32f2f;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="header-inner">
       <a href="Index.html" class="logo-wrap">
@@ -33,7 +70,6 @@
 
   <main>
 
-    <!-- HERO -->
     <section class="page-hero">
       <div class="hero-grid"></div>
       <div class="page-hero-inner">
@@ -50,10 +86,8 @@
       </div>
     </section>
 
-    <!-- SPECS LAYOUT -->
     <div class="specs-wrap">
 
-      <!-- MAIN TABLE -->
       <div class="specs-table-card">
         <div class="specs-table-header">
           <i class="fa-solid fa-microchip" aria-hidden="true"></i>
@@ -161,10 +195,8 @@
         </ul>
       </div>
 
-      <!-- SIDEBAR -->
       <div class="specs-sidebar">
 
-        <!-- Product card -->
         <div class="product-card">
           <div class="product-img-area">
             <div class="product-placeholder">📡</div>
@@ -179,7 +211,6 @@
           </div>
         </div>
 
-        <!-- Highlights -->
         <div class="highlight-card">
           <h3>Diferenciais técnicos</h3>
           <ul class="highlight-list">
@@ -191,7 +222,6 @@
           </ul>
         </div>
 
-        <!-- CTA -->
         <div class="cta-card">
           <h3>Pronto para instalar?</h3>
           <p>Escolha o plano ideal para seu projeto e proteja sua área.</p>
@@ -207,7 +237,6 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-top">
@@ -229,15 +258,13 @@
             <a href="https://instagram.com/sismoalerta" class="social-link" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
-            </a>
-            </a>
           </div>
         </div>
 
         <div class="footer-col">
           <h4>Produto</h4>
           <a href="Funcionalidades.html">Funcionalidades</a>
-          <a href="Especificações.html">Especificações técnicas</a>
+          <a href="Especificacoes.html">Especificações técnicas</a>
           <a href="Preço.html">Planos e preços</a>
           <a href="Criar-Conta.html">Criar conta</a>
         </div>
@@ -268,6 +295,46 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const token = localStorage.getItem("userToken");
+      const nome = localStorage.getItem("nomeCliente") || "Usuário";
+      const navContainer = document.querySelector("header nav");
+      
+      if (token && navContainer) {
+        // Encontra e remove os botões antigos de autenticação de dentro do nav
+        const btnEntrar = navContainer.querySelector('a[href="Entrar-Conta.html"]');
+        const btnComprar = navContainer.querySelector('.btn-primary-nav') || navContainer.querySelector('.btn-primary');
+        const divisor = navContainer.querySelector('.nav-divider');
+        
+        if(btnEntrar) btnEntrar.remove();
+        if(btnComprar) btnComprar.remove();
+        if(divisor) divisor.remove();
+        
+        // Extrai as iniciais do nome para renderizar na bolinha do perfil
+        const iniciais = nome.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+        
+        // Adiciona o elemento dinâmico de perfil e logout
+        navContainer.insertAdjacentHTML("beforeend", `
+          <div class="user-logged-menu">
+            <a href="gerencie-sua-conta.html" class="avatar-circle" title="Ver Perfil">${iniciais}</a>
+            <a href="javascript:void(0)" id="btnEfetuarLogoutSpecs" class="btn-logout">
+              <i class="fa-solid fa-sign-out-alt"></i> Sair da Conta
+            </a>
+          </div>
+        `);
+
+        // Adiciona a escuta de clique para deslogar
+        document.getElementById("btnEfetuarLogoutSpecs").addEventListener("click", function() {
+          if (confirm("Tem certeza que deseja sair da sua conta?")) {
+            localStorage.clear();
+            window.location.reload(); // Recarrega a página atualizando para o estado deslogado
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
